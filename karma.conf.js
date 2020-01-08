@@ -9,7 +9,7 @@ process.on('infrastructure_error', (error) => {
 module.exports = function (config) {
   config.set({
     basePath: '',
-    files: ['./tests/**/*.ts', './src/**/*.ts'],
+    files: ['./tests/**/*.ts'],
     frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
@@ -33,12 +33,15 @@ module.exports = function (config) {
           },
         ]
       },
+      resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+      },
       plugins: [
         new angularWebpack.AngularCompilerPlugin({
-          tsConfigPath: 'tests/tsconfig.json',
-          sourceMap: true
+          tsConfigPath: 'tests/tsconfig.json'
         })
-      ]
+      ],
+      devtool: 'inline-source-map'
     },
     webpackMiddleware: {
       stats: 'errors-only'
