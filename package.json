@@ -1,0 +1,36 @@
+{
+  "name": "dexie-encryptify",
+  "version": "0.1.0",
+  "description": "Dexie Encryptify addon",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "karma start karma.conf.js"
+  },
+  "author": "PVermeer",
+  "license": "MIT",
+  "dependencies": {
+    "@stablelib/base64": "^0.7.2",
+    "@types/karma": "^3.0.5",
+    "lodash": "^4.17.15",
+    "tweetnacl": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/faker": "^4.1.8",
+    "@types/jasmine": "^3.5.0",
+    "@types/lodash": "^4.14.149",
+    "dexie": "latest",
+    "dexie_master": "https://github.com/dfahlander/dexie.js/tarball/master",
+    "faker": "^4.1.0",
+    "jasmine-core": "^3.5.0",
+    "jasmine-spec-reporter": "^4.2.1",
+    "karma": "~4.4.1",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
+    "karma-jasmine": "~2.0.1",
+    "karma-jasmine-html-reporter": "^1.5.1",
+    "karma-typescript": "^4.1.1",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  }
+}
