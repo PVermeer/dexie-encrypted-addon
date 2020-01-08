@@ -1,5 +1,5 @@
 import Dexie from 'dexie';
-import faker from 'faker';
+import faker from 'faker/locale/en';
 import { encryptify } from '../src/encrypt';
 import { immutable } from '../src/immutable';
 

@@ -16,6 +16,10 @@
     "tweetnacl": "^1.0.1"
   },
   "devDependencies": {
+    "@angular/compiler": "^8.2.14",
+    "@angular/compiler-cli": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "@ngtools/webpack": "^8.3.21",
     "@types/faker": "^4.1.8",
     "@types/jasmine": "^3.5.0",
     "@types/lodash": "^4.14.149",
@@ -29,8 +33,9 @@
     "karma-coverage-istanbul-reporter": "^2.1.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.5.1",
-    "karma-typescript": "^4.1.1",
+    "karma-webpack": "^4.0.2",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.4"
+    "typescript": "~3.5.3",
+    "webpack": "^4.41.5"
   }
 }
