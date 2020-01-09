@@ -1,6 +1,5 @@
 // tslint:disable: space-before-function-paren // Conflict with default formatter vscode
 import Dexie from 'dexie';
-import { DbSchema } from '../node_modules/dexie_master/src/public/types/db-schema';
 import { Encryption } from './encryption.class';
 import { ModifiedKeys, SchemaParser } from './schema-parser';
 
@@ -16,7 +15,7 @@ export function encryptify(db: Dexie, secretKey?: string) {
         db.Version.prototype._parseStoresSpec,
         (origFunc) =>
 
-            function (this: any, storesSpec: StoreSchemas, outSchema: DbSchema) {
+            function (this: any, storesSpec: StoreSchemas, outSchema: any) {
                 const parser = new SchemaParser(storesSpec);
                 const encryptedKeys = parser.getEncryptedKeys();
                 const cleanedSchema = parser.getCleanedSchema();

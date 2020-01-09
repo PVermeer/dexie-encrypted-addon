@@ -9,7 +9,7 @@
     "removeComments": true,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2015",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es5",

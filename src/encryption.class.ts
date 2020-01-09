@@ -1,4 +1,5 @@
 import { decode as decodeBase64, encode as encodeBase64 } from '@stablelib/base64';
+import { decode as decodeUtf8, encode as encodeUtf8 } from '@stablelib/utf8';
 import { hash, randomBytes, secretbox } from 'tweetnacl';
 
 export class Encryption {
@@ -22,7 +23,7 @@ export class Encryption {
      * @param input Any non-circulair value.
      */
     static hash(input: any): string {
-        const messageUint8Array = new TextEncoder().encode(JSON.stringify(input));
+        const messageUint8Array = encodeUtf8(JSON.stringify(input));
         const hashUint8Array = hash(messageUint8Array);
         const base64FullMessage = encodeBase64(hashUint8Array);
         const shortString = base64FullMessage.slice(11, 31);
@@ -37,7 +38,7 @@ export class Encryption {
     public encrypt(json: any): string {
         const nonce = randomBytes(secretbox.nonceLength);
 
-        const messageUint8 = new TextEncoder().encode(JSON.stringify(json));
+        const messageUint8 = encodeUtf8(JSON.stringify(json));
         const box = secretbox(messageUint8, nonce, this.keyUint8Array);
 
         const fullMessage = new Uint8Array(nonce.length + box.length);
@@ -67,7 +68,7 @@ export class Encryption {
             throw new Error('Could not decrypt message!');
         }
 
-        const base64DecryptedMessage = new TextDecoder().decode(decrypted);
+        const base64DecryptedMessage = decodeUtf8(decrypted);
         return JSON.parse(base64DecryptedMessage);
     }
 

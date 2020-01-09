@@ -1,5 +1,8 @@
-import { StoreSchemas } from './encrypt';
+import { StoreSchemas } from './encryptify';
 
+/**
+ * @internal
+ */
 export interface ModifiedKeys {
     [prop: string]: {
         keys: string[];
@@ -7,6 +10,9 @@ export interface ModifiedKeys {
     };
 }
 
+/**
+ * @internal
+ */
 export class SchemaParser {
 
     private schema: StoreSchemas;
