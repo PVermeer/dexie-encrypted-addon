@@ -1,57 +1,54 @@
 // @ts-check
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
-const angularWebpack = require('@ngtools/webpack');
 
 // @ts-ignore
 process.on('infrastructure_error', (error) => {
     console.error('infrastructure_error', error);
 });
+var stopper = require('karma').stopper
 
 function karmaConfig(config) {
     return {
         basePath: '',
-        files: ['./test/**/*.spec.ts'],
-        frameworks: ['jasmine'],
-        plugins: [
-            'karma-jasmine',
-            'karma-jasmine-html-reporter',
-            'karma-webpack',
-            'karma-chrome-launcher'
-        ],
+        files: ['./test/**/*.ts', './src/**/*.ts'],
+        frameworks: ['jasmine', 'karma-typescript', 'detectBrowsers'],
         preprocessors: {
-            "**/*.ts": ['webpack'],
+            "**/*.ts": 'karma-typescript',
         },
-        webpack: {
-            mode: 'development',
-            performance: { hints: false },
-            module: {
-                rules: [
-                    {
-                        test: /\.tsx?$/,
-                        use: '@ngtools/webpack',
-                        exclude: /node_modules/,
+        karmaTypescriptConfig: {
+            tsconfig: './test/tsconfig.test.json',
+            coverageOptions: {
+                threshold: {
+                    global: {
+                        statements: 100,
+                        branches: 100,
+                        functions: 100,
+                        lines: 100,
                     }
-                ]
+                }
             },
-            resolve: {
-                extensions: ['.tsx', '.ts', '.js', '.json']
-            },
-            plugins: [
-                new angularWebpack.AngularCompilerPlugin({
-                    tsConfigPath: './test/tsconfig.test.json'
-                })
-            ],
-            devtool: 'inline-source-map'
+            reports: {
+                "html": "./coverage",
+                "text-summary": null
+            }
         },
-        webpackMiddleware: {
-            stats: 'errors-only'
+        detectBrowsers: {
+            preferHeadless: true,
+            postDetection: function (availableBrowsers) {
+                console.log('Available browser: ' + availableBrowsers);
+                const browsersToUse = availableBrowsers
+                    .filter(x => !(
+                        x.startsWith('PhantomJS') ||
+                        x.startsWith('IE')
+                    ));
+                return browsersToUse;
+            }
         },
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
         },
-        browsers: ['ChromeHeadless'],
-        reporters: ['progress', 'kjhtml'],
+        reporters: ['progress', 'karma-typescript'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

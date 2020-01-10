@@ -4,6 +4,7 @@
     "sourceMap": true
   },
   "include": [
-    "../test"
+    "../test",
+    "../src"
   ]
 }
