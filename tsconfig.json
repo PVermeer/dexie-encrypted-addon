@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "outDir": "./dist",
     "sourceMap": false,
-    "declaration": true,
+    "declaration": false,
     "stripInternal": true,
     "removeComments": true,
     "downlevelIteration": true,

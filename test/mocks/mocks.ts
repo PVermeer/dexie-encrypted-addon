@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 import faker from 'faker/locale/en';
-import { encryptify } from '../src/encryptify';
-import { immutable } from '../src/immutable';
+import { encryptify } from '../../src/encryptify';
+import { immutable } from '../../src/immutable';
 
 interface Friend {
     id: string;

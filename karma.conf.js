@@ -1,72 +1,37 @@
 // @ts-check
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
-const angularWebpack = require('@ngtools/webpack');
 
 // @ts-ignore
 process.on('infrastructure_error', (error) => {
     console.error('infrastructure_error', error);
 });
+var stopper = require('karma').stopper
 
 function karmaConfig(config) {
     return {
         basePath: '',
-        files: ['./test/**/*.ts'],
-        frameworks: ['jasmine', 'detectBrowsers'],
-        plugins: [
-            'karma-jasmine',
-            'karma-jasmine-html-reporter',
-            'karma-coverage-istanbul-reporter',
-            'karma-webpack',
-            'karma-chrome-launcher',
-            'karma-edge-launcher',
-            'karma-firefox-launcher',
-            'karma-ie-launcher',
-            'karma-safari-launcher',
-            'karma-safaritechpreview-launcher',
-            'karma-opera-launcher',
-            'karma-phantomjs-launcher',
-            'karma-detect-browsers'
-        ],
+        files: ['./test/**/*.ts', './src/**/*.ts'],
+        frameworks: ['jasmine', 'karma-typescript', 'detectBrowsers'],
         preprocessors: {
-            "**/*.ts": ['webpack']
+            "**/*.ts": 'karma-typescript',
         },
-        webpack: {
-            mode: 'development',
-            performance: { hints: false },
-            module: {
-                rules: [
-                    {
-                        test: /\.tsx?$/,
-                        use: '@ngtools/webpack',
-                        exclude: /node_modules/,
-                    },
-                    {
-                        test: /\.tsx?$/,
-                        exclude: /(node_modules|test)/,
-                        loader: 'istanbul-instrumenter-loader',
-                        enforce: 'post',
-                        options: {
-                            esModules: true
-                        }
+        karmaTypescriptConfig: {
+            tsconfig: './test/tsconfig.test.json',
+            coverageOptions: {
+                threshold: {
+                    global: {
+                        statements: 100,
+                        branches: 100,
+                        functions: 100,
+                        lines: 100,
                     }
-                ]
+                }
             },
-            resolve: {
-                extensions: ['.tsx', '.ts', '.js'],
-            },
-            plugins: [
-                new angularWebpack.AngularCompilerPlugin({
-                    tsConfigPath: './test/tsconfig.json'
-                })
-            ],
-            devtool: 'inline-source-map'
-        },
-        webpackMiddleware: {
-            stats: 'errors-only'
-        },
-        client: {
-            clearContext: false // leave Jasmine Spec Runner output visible in browser
+            reports: {
+                "html": "./coverage",
+                "text-summary": null
+            }
         },
         detectBrowsers: {
             preferHeadless: true,
@@ -80,12 +45,10 @@ function karmaConfig(config) {
                 return browsersToUse;
             }
         },
-        coverageIstanbulReporter: {
-            dir: require('path').join(__dirname, './coverage'),
-            reports: ['html', 'lcovonly', 'text-summary'],
-            fixWebpackSourcePaths: true
+        client: {
+            clearContext: false // leave Jasmine Spec Runner output visible in browser
         },
-        reporters: ['progress', 'kjhtml', 'coverage-istanbul'],
+        reporters: ['progress', 'karma-typescript'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
