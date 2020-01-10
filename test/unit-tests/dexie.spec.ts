@@ -1,5 +1,5 @@
-import { Database, mockFriends } from './mocks';
-import { Encryption } from '../src/encryption.class';
+import { Database, mockFriends } from '../mocks/mocks';
+import { Encryption } from '../../src/encryption.class';
 
 describe('Dexie', () => {
     it('should create database', () => {
@@ -14,7 +14,7 @@ describe('Dexie', () => {
             expect(db.isOpen()).toBeTrue();
         });
         afterEach(async () => {
-            await db.delete();
+            // await db.delete();
         });
         it('should be able to add friends', async () => {
             const [friend] = mockFriends(1);
@@ -23,6 +23,14 @@ describe('Dexie', () => {
 
             const getFriend = await db.friends.get(hashedId);
             expect(getFriend).toEqual({ ...friend, id: hashedId });
+        });
+        xit('should be able to add multiple friends', async () => {
+            const friends = mockFriends(1);
+            await db.friends.bulkAdd(friends);
+            const hashedId = Encryption.hash(friends[0]);
+
+            const getFriend = await db.friends.get(hashedId);
+            expect(getFriend).toEqual({ ...friends[0], id: hashedId });
         });
     });
 });

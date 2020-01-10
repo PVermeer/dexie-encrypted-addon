@@ -11,25 +11,16 @@ process.on('infrastructure_error', (error) => {
 function karmaConfig(config) {
     return {
         basePath: '',
-        files: ['./test/**/*.ts'],
-        frameworks: ['jasmine', 'detectBrowsers'],
+        files: ['./test/**/*.spec.ts'],
+        frameworks: ['jasmine'],
         plugins: [
             'karma-jasmine',
             'karma-jasmine-html-reporter',
-            'karma-coverage-istanbul-reporter',
             'karma-webpack',
-            'karma-chrome-launcher',
-            'karma-edge-launcher',
-            'karma-firefox-launcher',
-            'karma-ie-launcher',
-            'karma-safari-launcher',
-            'karma-safaritechpreview-launcher',
-            'karma-opera-launcher',
-            'karma-phantomjs-launcher',
-            'karma-detect-browsers'
+            'karma-chrome-launcher'
         ],
         preprocessors: {
-            "**/*.ts": ['webpack']
+            "**/*.ts": ['webpack'],
         },
         webpack: {
             mode: 'development',
@@ -40,24 +31,15 @@ function karmaConfig(config) {
                         test: /\.tsx?$/,
                         use: '@ngtools/webpack',
                         exclude: /node_modules/,
-                    },
-                    {
-                        test: /\.tsx?$/,
-                        exclude: /(node_modules|test)/,
-                        loader: 'istanbul-instrumenter-loader',
-                        enforce: 'post',
-                        options: {
-                            esModules: true
-                        }
                     }
                 ]
             },
             resolve: {
-                extensions: ['.tsx', '.ts', '.js'],
+                extensions: ['.tsx', '.ts', '.js', '.json']
             },
             plugins: [
                 new angularWebpack.AngularCompilerPlugin({
-                    tsConfigPath: './test/tsconfig.json'
+                    tsConfigPath: './test/tsconfig.test.json'
                 })
             ],
             devtool: 'inline-source-map'
@@ -68,24 +50,8 @@ function karmaConfig(config) {
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
         },
-        detectBrowsers: {
-            preferHeadless: true,
-            postDetection: function (availableBrowsers) {
-                console.log('Available browser: ' + availableBrowsers);
-                const browsersToUse = availableBrowsers
-                    .filter(x => !(
-                        x.startsWith('PhantomJS') ||
-                        x.startsWith('IE')
-                    ));
-                return browsersToUse;
-            }
-        },
-        coverageIstanbulReporter: {
-            dir: require('path').join(__dirname, './coverage'),
-            reports: ['html', 'lcovonly', 'text-summary'],
-            fixWebpackSourcePaths: true
-        },
-        reporters: ['progress', 'kjhtml', 'coverage-istanbul'],
+        browsers: ['ChromeHeadless'],
+        reporters: ['progress', 'kjhtml'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

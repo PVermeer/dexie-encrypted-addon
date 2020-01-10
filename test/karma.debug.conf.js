@@ -6,8 +6,6 @@ function karmaConfig(config) {
     const mainConfig = require('../karma.conf').mainKarmaConfig(config)
 
     mainConfig.basePath = '../';
-    mainConfig.frameworks = mainConfig.frameworks.filter(x => x !== 'detectBrowsers');
-    delete mainConfig.detectBrowsers;
     mainConfig.customLaunchers = {
         ChromeDebugging: {
             base: 'Chrome',
@@ -15,8 +13,8 @@ function karmaConfig(config) {
         }
     };
     mainConfig.browsers = ['ChromeDebugging'];
-    mainConfig.singleRun = false;
 
+    mainConfig.singleRun = false;
     return mainConfig;
 }
 

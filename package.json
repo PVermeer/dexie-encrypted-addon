@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf -rf dist/ && tsc",
-    "test": "rimraf -rf coverage/ && karma start karma.conf.js",
-    "test:debug": "rimraf -rf coverage/ && karma start test/karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "test:debug": "karma start test/karma.debug.conf.js",
+    "test:browsers": "karma start test/karma.browser.conf.js",
+    "test:coverage": "rimraf -rf coverage/ && karma start test/karma.coverage.conf.js"
   },
   "author": "PVermeer",
   "license": "MIT",
