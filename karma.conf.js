@@ -12,12 +12,13 @@ function karmaConfig(config) {
     return {
         basePath: '',
         files: ['./test/**/*.ts', './src/**/*.ts'],
+        exclude: ['./test/index.ts'],
         frameworks: ['jasmine', 'karma-typescript', 'detectBrowsers'],
         preprocessors: {
             "**/*.ts": 'karma-typescript',
         },
         karmaTypescriptConfig: {
-            tsconfig: './test/tsconfig.test.json',
+            tsconfig: './test/tsconfig.json',
             coverageOptions: {
                 threshold: {
                     global: {

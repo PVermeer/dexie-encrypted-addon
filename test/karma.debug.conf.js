@@ -39,7 +39,7 @@ function karmaConfig(config) {
             },
             plugins: [
                 new angularWebpack.AngularCompilerPlugin({
-                    tsConfigPath: './test/tsconfig.test.json'
+                    tsConfigPath: './test/tsconfig.json'
                 })
             ],
             devtool: 'inline-source-map'
