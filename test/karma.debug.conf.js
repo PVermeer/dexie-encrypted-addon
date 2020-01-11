@@ -11,7 +11,7 @@ function karmaConfig(config) {
 
     return {
         basePath: '../',
-        files: ['./test/**/*.spec.ts'],
+        files: ['./test/index.ts'],
         frameworks: ['jasmine'],
         plugins: [
             'karma-jasmine',
