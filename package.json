@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf -rf dist/ && tsc",
     "test": "rimraf -rf coverage/ && karma start karma.conf.js",
-    "test:debug": "karma start test/karma.debug.conf.js",
+    "test:debug": "karma start test/karma.debug.conf.js"
   },
   "author": "PVermeer",
   "license": "MIT",
