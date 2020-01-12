@@ -1,33 +1,27 @@
 import { StoreSchemas } from './encryptify';
 
-/**
- * @internal
- */
+/** @internal */
 export interface ModifiedKeys {
-    [prop: string]: {
-        keys: string[];
-        hashPrimary: boolean
-    };
+    keys: string[];
+    hashKey: string | null;
 }
 
-/**
- * @internal
- */
+/** @internal */
+export interface ModifiedKeysTable {
+    [prop: string]: ModifiedKeys;
+}
+
+/** @internal */
 export class SchemaParser {
 
     private schema: StoreSchemas;
 
-    constructor(schema: StoreSchemas) {
-        this.schema = schema;
-    }
-
     /**
      * Extract the to be encrypted keys from the schema.
      */
-    public getEncryptedKeys(): ModifiedKeys {
-        return Object.entries(this.schema).reduce<ModifiedKeys>((acc, [table, value]) => {
+    public getEncryptedKeys(): ModifiedKeysTable {
+        return Object.entries(this.schema).reduce<ModifiedKeysTable>((acc, [table, value]) => {
             if (!value) { return acc; }
-            if (acc[table]) { throw new Error('Duplicate table found'); }
 
             const values = value.split(',').map(x => x.trim());
             const toBeEncryptedKeys = values
@@ -39,10 +33,14 @@ export class SchemaParser {
 
             if (!toBeEncryptedKeys.length && !hashPrimary) { return acc; }
 
+            const hashKey = hashPrimary ?
+                primaryKey.replace('#', '').replace('++', '') :
+                null;
+
             return {
                 ...acc, [table]: {
                     keys: toBeEncryptedKeys,
-                    hashPrimary
+                    hashKey
                 }
             };
         }, {});
@@ -54,7 +52,6 @@ export class SchemaParser {
     public getCleanedSchema(): StoreSchemas {
         return Object.entries(this.schema).reduce<StoreSchemas>((acc, [table, value]) => {
             if (!value) { return acc; }
-            if (acc[table]) { throw new Error('Duplicate table found'); }
 
             const values = value.split(',').map(x => x.trim());
             values[0] = values[0].replace('#', '');
@@ -62,6 +59,10 @@ export class SchemaParser {
 
             return { ...acc, [table]: filteredKeyString };
         }, {});
+    }
+
+    constructor(schema: StoreSchemas) {
+        this.schema = schema;
     }
 
 }

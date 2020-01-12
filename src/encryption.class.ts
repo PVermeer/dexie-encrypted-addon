@@ -5,16 +5,15 @@ import { hash, randomBytes, secretbox } from 'tweetnacl';
 export class Encryption {
 
     private readonly _secret: string;
-    get secret() {
-        return this._secret;
-    }
+    public get secret() { return this._secret; }
 
-    private readonly keyUint8Array: Uint8Array;
+    private readonly _keyUint8Array: Uint8Array;
+    public get secretUint8Array(): Uint8Array { return this._keyUint8Array; }
 
     /**
      * Create a random key.
      */
-    static createRandomEncryptionKey(): string {
+    public static createRandomEncryptionKey(): string {
         return encodeBase64(randomBytes(32));
     }
 
@@ -22,7 +21,7 @@ export class Encryption {
      * Create a base64 hash string of the provided input.
      * @param input Any non-circulair value.
      */
-    static hash(input: any): string {
+    public static hash(input: any): string {
         const messageUint8Array = encodeUtf8(JSON.stringify(input));
         const hashUint8Array = hash(messageUint8Array);
         const base64FullMessage = encodeBase64(hashUint8Array);
@@ -36,10 +35,11 @@ export class Encryption {
      * @param key Secret key to encrypt with.
      */
     public encrypt(json: any): string {
-        const nonce = randomBytes(secretbox.nonceLength);
+        if (!json) { return json; }
 
+        const nonce = randomBytes(secretbox.nonceLength);
         const messageUint8 = encodeUtf8(JSON.stringify(json));
-        const box = secretbox(messageUint8, nonce, this.keyUint8Array);
+        const box = secretbox(messageUint8, nonce, this.secretUint8Array);
 
         const fullMessage = new Uint8Array(nonce.length + box.length);
         fullMessage.set(nonce);
@@ -62,7 +62,7 @@ export class Encryption {
             messageWithNonce.length
         );
 
-        const decrypted = secretbox.open(message, nonce, this.keyUint8Array);
+        const decrypted = secretbox.open(message, nonce, this.secretUint8Array);
 
         if (!decrypted) {
             throw new Error('Could not decrypt message!');
@@ -75,12 +75,11 @@ export class Encryption {
     constructor(
         secret?: string
     ) {
-
         secret ?
             this._secret = secret :
             this._secret = Encryption.createRandomEncryptionKey();
 
-        this.keyUint8Array = decodeBase64(this._secret);
+        this._keyUint8Array = decodeBase64(this._secret);
     }
 
 }
