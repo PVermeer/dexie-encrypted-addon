@@ -2,6 +2,9 @@ import { decode as decodeBase64, encode as encodeBase64 } from '@stablelib/base6
 import { decode as decodeUtf8, encode as encodeUtf8 } from '@stablelib/utf8';
 import { hash, randomBytes, secretbox } from 'tweetnacl';
 
+/**
+ * Class with cryptic methods
+ */
 export class Encryption {
 
     private readonly _secret: string;

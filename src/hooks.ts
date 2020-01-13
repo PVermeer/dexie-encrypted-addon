@@ -1,6 +1,7 @@
 import { Encryption } from './encryption.class';
 import { ModifiedKeys } from './schema-parser';
 
+/** @internal */
 export function encryptOnCreation(
     primaryKey: any,
     document: any,
@@ -22,6 +23,7 @@ export function encryptOnCreation(
     if (docHash && keysObj.hashKey) { document[keysObj.hashKey] = docHash; }
 }
 
+/** @internal */
 export function encryptOnUpdating(
     changes: any,
     _primaryKey: any,
@@ -37,6 +39,7 @@ export function encryptOnUpdating(
     }, {});
 }
 
+/** @internal */
 export function decryptOnReading(
     document: any,
     keysObj: ModifiedKeys,

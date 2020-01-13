@@ -4,6 +4,7 @@ import { cloneDeep } from 'lodash';
 
 type pVermeerDb = Dexie & { pVermeerAddonsRegistered: { [addon: string]: boolean } };
 
+/** @internal */
 export function immutable(db: Dexie) {
 
     const dbPVermeer = db as pVermeerDb;

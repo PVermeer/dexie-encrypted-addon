@@ -7,7 +7,12 @@ import { ModifiedKeysTable, SchemaParser } from './schema-parser';
 
 export interface StoreSchemas { [tableName: string]: string | null; }
 type registeredAddons = Dexie & { pVermeerAddonsRegistered: { [addon: string]: boolean } };
-interface EncryptedOptions {
+
+/**
+ * @secretKey Your previously saved secret
+ * @immutable Set to false to disable immutable state on document creation and updates
+ */
+export interface EncryptedOptions {
     secretKey?: string;
     immutable?: boolean;
 }
@@ -18,13 +23,13 @@ interface EncryptedOptions {
  * *Example TypeScript:*
  * ```
  *  const secret = Encryption.createRandomEncryptionKey();
- *  class TestDatabase extends Dexie {
+ *  class FriendsDatabase extends Dexie {
  *      public friends: Dexie.Table<Friend, string>;
  *      constructor(name: string, secret?: string) {
  *          super(name);
- *          encryptify(this, { secretKey: secret });
+ *          encrypted(this, { secretKey: secret });
  *          this.version(1).stores({
- *              friends: '++#id, firstName, $lastName, $shoeSize, age'
+ *              friends: '#id, $name, $shoeSize, age'
  *          });
  *      }
  *  }
@@ -33,15 +38,14 @@ interface EncryptedOptions {
  * *Example JavaScript:*
  * ```
  *  const secret = Encryption.createRandomEncryptionKey();
- *  const db = new Dexie('TestDatabase', {
- *      addons: [encryptify.setOptions({ secretKey: secret })]
+ *  const db = new Dexie('FriendsDatabase', {
+ *      addons: [encrypted.setOptions({ secretKey: secret })]
  *  });
  *  db.version(1).stores({
- *      friends: '++#id, firstName, $lastName, $shoeSize, age'
+ *      friends: '#id, $name, $shoeSize, age'
  *  });
- *  return db;
  * ```
- * @method setOptions(string) Set the secret and return the addon.
+ * @method setOptions(string) Set options and return the addon.
  * @param options Set secret key and / or immutable create methods.
  * @returns The secret key (provided or generated)
  */

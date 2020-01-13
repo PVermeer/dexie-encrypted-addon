@@ -82,7 +82,7 @@ API
 
 The packet exposes two exports:
 
-#### dexie-encrypted - plugin
+#### dexie-encrypted - addon
 ```ts
 /**
  * @secretKey Your previously saved secret.
