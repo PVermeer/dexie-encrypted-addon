@@ -1,6 +1,8 @@
 Dexie Encryption Plugin
 ======
 
+[![Build Status](https://travis-ci.org/PVermeer/dexie-encryption-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encryption-addon)
+
 Install over npm
 ----------------
 ```
