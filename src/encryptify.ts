@@ -2,14 +2,72 @@
 import Dexie from 'dexie';
 import { Encryption } from './encryption.class';
 import { decryptOnReading, encryptOnCreation, encryptOnUpdating } from './hooks';
+import { immutable } from './immutable';
 import { ModifiedKeysTable, SchemaParser } from './schema-parser';
 
 export interface StoreSchemas { [tableName: string]: string | null; }
+type registeredAddons = Dexie & { pVermeerAddonsRegistered: { [addon: string]: boolean } };
+interface EncryptedOptions {
+    secretKey?: string;
+    immutable?: boolean;
+}
 
-export function encryptify(db: Dexie, secretKey?: string) {
+/**
+ * Register addon on a Dexie database.
+ *
+ * *Example TypeScript:*
+ * ```
+ *  const secret = Encryption.createRandomEncryptionKey();
+ *  class TestDatabase extends Dexie {
+ *      public friends: Dexie.Table<Friend, string>;
+ *      constructor(name: string, secret?: string) {
+ *          super(name);
+ *          encryptify(this, { secretKey: secret });
+ *          this.version(1).stores({
+ *              friends: '++#id, firstName, $lastName, $shoeSize, age'
+ *          });
+ *      }
+ *  }
+ * ```
+ *
+ * *Example JavaScript:*
+ * ```
+ *  const secret = Encryption.createRandomEncryptionKey();
+ *  const db = new Dexie('TestDatabase', {
+ *      addons: [encryptify.setOptions({ secretKey: secret })]
+ *  });
+ *  db.version(1).stores({
+ *      friends: '++#id, firstName, $lastName, $shoeSize, age'
+ *  });
+ *  return db;
+ * ```
+ * @method setOptions(string) Set the secret and return the addon.
+ * @param options Set secret key and / or immutable create methods.
+ * @returns The secret key (provided or generated)
+ */
+export function encrypted(db: Dexie, options?: EncryptedOptions) {
+
+    // Register addon
+    const dbPVermeer = db as registeredAddons;
+    dbPVermeer.pVermeerAddonsRegistered = {
+        ...dbPVermeer.pVermeerAddonsRegistered,
+        encrypted: true
+    };
+
+    let secret: string | undefined;
+    let useImmutable = true;
+
+    if (options) {
+        if (options.secretKey) { secret = options.secretKey; }
+        if (options.immutable !== undefined) { useImmutable = options.immutable; }
+    }
+
+    if (useImmutable && !dbPVermeer.pVermeerAddonsRegistered.immutable) {
+        immutable(db);
+    }
 
     let encryptSchema: ModifiedKeysTable | undefined;
-    const encryption = new Encryption(secretKey);
+    const encryption = new Encryption(secret);
 
     // Get the encryption keys from the schema and return the function with a clean schema.
     db.Version.prototype._parseStoresSpec = Dexie.override(
@@ -54,3 +112,17 @@ export function encryptify(db: Dexie, secretKey?: string) {
 
     return encryption.secret;
 }
+
+/**
+ * Set options for Encryption addon.
+ *
+ * *Example*:
+ *
+ * ```
+ *  Dexie.addons.push(encrypted({
+ *      secrectKey: string;
+ *      immutable: boolean;
+ *  }))
+ * ```
+ */
+encrypted.setOptions = (options: EncryptedOptions) => (db: Dexie) => encrypted(db, options);

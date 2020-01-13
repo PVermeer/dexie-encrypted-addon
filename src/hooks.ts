@@ -7,7 +7,6 @@ export function encryptOnCreation(
     keysObj: ModifiedKeys,
     encryption: Encryption
 ) {
-
     // Hash the document to the primary key so it can be compared for uniqness.
     let docHash: string | null = null;
     if (keysObj.hashKey && primaryKey === undefined) {
@@ -29,7 +28,7 @@ export function encryptOnUpdating(
     keysObj: ModifiedKeys,
     encryption: Encryption
 ) {
-    // Dont't hash the primary key again.
+    // Dont't create new hash on the primary key when updating.
     return Object.entries(changes).reduce((acc, [key, value]) => {
         if (keysObj.keys.some(x => x === key)) {
             acc[key] = encryption.encrypt(value);
@@ -43,7 +42,6 @@ export function decryptOnReading(
     keysObj: ModifiedKeys,
     encryption: Encryption
 ) {
-    if (!document) { return; }
     keysObj.keys.forEach(key => {
         if (document[key]) { document[key] = encryption.decrypt(document[key]); }
     });

@@ -2,7 +2,15 @@
 import Dexie from 'dexie';
 import { cloneDeep } from 'lodash';
 
+type pVermeerDb = Dexie & { pVermeerAddonsRegistered: { [addon: string]: boolean } };
+
 export function immutable(db: Dexie) {
+
+    const dbPVermeer = db as pVermeerDb;
+    if (!('pVermeerAddonsRegistered' in dbPVermeer)) {
+        dbPVermeer.pVermeerAddonsRegistered = {};
+    }
+    dbPVermeer.pVermeerAddonsRegistered.immutable = true;
 
     // =============== Add =================
     db.Table.prototype.add = Dexie.override(

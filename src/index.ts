@@ -1,2 +1,2 @@
-export { encryptify } from './encryptify';
+export { encrypted  } from './encryptify';
 export { Encryption } from './encryption.class';

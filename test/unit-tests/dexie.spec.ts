@@ -1,16 +1,20 @@
-import { TestDatabase } from '../mocks/mocks';
-import { Encryption } from '../../src';
+import { databasesPositive } from '../mocks/mocks';
 
 describe('Dexie', () => {
-    it('should create database', async () => {
-        const db = new TestDatabase('Test database');
-        expect(db).toBeTruthy();
-        await db.delete();
-    });
-    it('should create database with provided secretKey', async () => {
-        const secret = Encryption.createRandomEncryptionKey();
-        const db = new TestDatabase('Test database', secret);
-        expect(db).toBeTruthy();
-        await db.delete();
+    databasesPositive.forEach(database => {
+        let db: ReturnType<typeof database.db>;
+        beforeEach(async () => {
+            db = database.db();
+            await db.open();
+        });
+        afterEach(async () => {
+            await db.delete();
+        });
+        describe(database.desc, () => {
+            it('should create database', async () => {
+                expect(db).toBeTruthy();
+                expect(db.isOpen()).toBeTrue();
+            });
+        });
     });
 });

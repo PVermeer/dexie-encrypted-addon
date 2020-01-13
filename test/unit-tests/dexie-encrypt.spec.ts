@@ -1,78 +1,73 @@
 import faker from 'faker';
 import { Encryption } from '../../src/encryption.class';
 import * as hooks from '../../src/hooks';
-import { Friend, mockFriends, TestDatabase, TestDatabaseNoEncryptedKeys, TestDatabaseNoHashPrimary, TestDatabaseNoIndexesNoHash } from '../mocks/mocks';
+import * as immutable from '../../src/immutable';
+import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable } from '../mocks/mocks';
 
 describe('Encrypted databases', () => {
-    const parameters = [
-        {
-            desc: 'TestDatabase',
-            db: new TestDatabase('TestDatabase')
-        },
-        {
-            desc: 'TestDatabaseNoEncryptedKeys',
-            db: new TestDatabaseNoEncryptedKeys('TestDatabaseNoEncryptedKeys')
-        }
-    ];
-    parameters.forEach(params => {
-        describe(params.desc, () => {
-            let db: typeof params.db;
+    // Should work for each positive database
+    databasesPositive.forEach(database => {
+        describe(database.desc, () => {
+            let db: ReturnType<typeof database.db>;
             beforeEach(async () => {
-                db = params.db;
+                spyOn(immutable, 'immutable').and.callThrough();
+                db = database.db();
                 await db.open();
                 expect(db.isOpen()).toBeTrue();
-                const hooksSpy = spyOnAllFunctions(hooks);
-                Object.keys(hooksSpy).forEach(key => hooksSpy[key].and.callThrough());
             });
             afterEach(async () => {
                 await db.delete();
             });
+            it('should override create methods', async () => {
+                const [friend] = mockFriends(1);
+                await db.friends.add(friend);
+                expect(immutable.immutable).toHaveBeenCalled();
+            });
             describe('Hooks', () => {
-                const friends = mockFriends();
+                let friends: Friend[];
+                let id: string;
+                let ids: string[];
+                beforeEach(async () => {
+                    friends = mockFriends();
+                    id = await db.friends.bulkAdd(friends);
+                    ids = friends.map(friend => Encryption.hash(friend));
+                    const hooksSpy = spyOnAllFunctions(hooks);
+                    Object.keys(hooksSpy).forEach(key => hooksSpy[key].and.callThrough());
+                });
                 describe('Creation', () => {
+                    let newFriends: Friend[];
+                    beforeEach(async () => {
+                        newFriends = mockFriends();
+                    });
                     afterEach(() => {
                         expect(hooks.encryptOnCreation).toHaveBeenCalled();
                         expect(hooks.encryptOnUpdating).not.toHaveBeenCalled();
                         expect(hooks.decryptOnReading).not.toHaveBeenCalled();
                     });
                     it('should be called on add()', async () => {
-                        await db.friends.add(friends[0]);
+                        await db.friends.add(newFriends[0]);
                     });
                     it('should be called on bulkAdd()', async () => {
-                        await db.friends.bulkAdd(friends);
+                        await db.friends.bulkAdd(newFriends);
                     });
                     it('should be called on put()', async () => {
-                        await db.friends.put(friends[0]);
+                        await db.friends.put(newFriends[0]);
                     });
                     it('should be called on bulkPut()', async () => {
-                        await db.friends.bulkPut(friends);
+                        await db.friends.bulkPut(newFriends);
                     });
                 });
                 describe('Updating', () => {
-                    let dbUpdating: TestDatabase;
-                    let friendsUpd: Friend[];
-                    let id: string;
-                    let ids: string[];
-                    beforeAll(async () => {
-                        dbUpdating = new TestDatabase('Db test hook updating');
-                        await dbUpdating.open();
-                        friendsUpd = mockFriends();
-                        id = await dbUpdating.friends.bulkAdd(friendsUpd);
-                        ids = friendsUpd.map(friend => Encryption.hash(friend));
-                    });
                     afterEach(() => {
                         expect(hooks.encryptOnUpdating).toHaveBeenCalled();
                         expect(hooks.encryptOnCreation).not.toHaveBeenCalled();
                         expect(hooks.decryptOnReading).not.toHaveBeenCalled();
                     });
-                    afterAll(async () => {
-                        await dbUpdating.delete();
-                    });
                     it('should be called on update()', async () => {
-                        await dbUpdating.friends.update(id, friends[1]);
+                        await db.friends.update(id, friends[1]);
                     });
                     it('should be called on put()', async () => {
-                        await dbUpdating.friends.put({ ...friends[1], id });
+                        await db.friends.put({ ...friends[1], id });
                     });
                     it('should be called on bulkPut()', async () => {
                         /*
@@ -81,32 +76,20 @@ describe('Encrypted databases', () => {
                         // const getFriends = await db.friends.bulkGet(hashedIds);
                         const friends2 = mockFriends();
                         const hashedDocuments = friends2.map((friend, i) => ({ ...friend, id: ids[i] }));
-                        await dbUpdating.friends.bulkPut(hashedDocuments);
+                        await db.friends.bulkPut(hashedDocuments);
                     });
                 });
                 describe('Reading', () => {
-                    let dbReading: TestDatabase;
-                    let friendsRead: Friend[];
-                    let id: string;
-                    beforeAll(async () => {
-                        dbReading = new TestDatabase('Db test hook updating');
-                        await dbReading.open();
-                        friendsRead = mockFriends();
-                        id = await dbReading.friends.bulkAdd(friendsRead);
-                    });
                     afterEach(() => {
                         expect(hooks.decryptOnReading).toHaveBeenCalled();
                         expect(hooks.encryptOnUpdating).not.toHaveBeenCalled();
                         expect(hooks.encryptOnCreation).not.toHaveBeenCalled();
                     });
-                    afterAll(async () => {
-                        await dbReading.delete();
-                    });
                     it('should be called on get()', async () => {
                         await db.friends.get(id);
                     });
                     it('should be called on where()', async () => {
-                        await dbReading.friends.where('age')
+                        await db.friends.where('age')
                             .between(1, 80, true, true)
                             .first();
                     });
@@ -302,39 +285,27 @@ describe('Encrypted databases', () => {
                 });
             });
             describe('Get()', () => {
-                let dbReading: TestDatabase;
                 let friendsRead: Friend[];
                 let id: string;
-                beforeAll(async () => {
-                    dbReading = new TestDatabase('Db test reading');
-                    await dbReading.open();
+                beforeEach(async () => {
                     friendsRead = mockFriends();
-                    id = await dbReading.friends.bulkAdd(friendsRead);
-                });
-                afterAll(async () => {
-                    await dbReading.delete();
+                    id = await db.friends.bulkAdd(friendsRead);
                 });
                 it('should be able to get the decrypted document', async () => {
-                    const friend = await dbReading.friends.get(id);
+                    const friend = await db.friends.get(id);
                     expect(friend).toEqual({ ...friendsRead[4], id });
                 });
             });
             describe('Where()', () => {
-                let dbReading: TestDatabase;
                 let friendsRead: Friend[];
                 let friendsWithIds: Friend[];
-                beforeAll(async () => {
-                    dbReading = new TestDatabase('Db test reading');
-                    await dbReading.open();
+                beforeEach(async () => {
                     friendsRead = mockFriends();
-                    await dbReading.friends.bulkAdd(friendsRead);
+                    await db.friends.bulkAdd(friendsRead);
                     friendsWithIds = friendsRead.map(friend => ({ ...friend, id: Encryption.hash(friend) }));
                 });
-                afterAll(async () => {
-                    await dbReading.delete();
-                });
                 it('should be able to get decrypted documents', async () => {
-                    const friends = await dbReading.friends.where('age')
+                    const friends = await db.friends.where('age')
                         .between(1, 80, true, true).toArray();
                     expect(friends).toEqual(jasmine.arrayContaining(friendsWithIds));
                 });
@@ -343,25 +314,30 @@ describe('Encrypted databases', () => {
     });
     describe('Negative', () => {
         describe('Faulty databases', () => {
-            const parametersNegative = [
-                {
-                    desc: 'TestDatabaseNoHashPrimary',
-                    db: new TestDatabaseNoHashPrimary('TestDatabaseNoHashPrimary')
-                },
-                {
-                    desc: 'TestDatabaseNoIndexesNoHash',
-                    db: new TestDatabaseNoIndexesNoHash('TestDatabaseNoIndexesNoHash')
-                }
-            ];
-            parametersNegative.forEach(params => {
-                describe(params.desc, () => {
+            // Faulty databases should throw
+            databasesNegative.forEach(database => {
+                let db: ReturnType<typeof database.db>;
+                beforeEach(() => {
+                    db = database.db();
+                });
+                afterEach(async () => {
+                    db.delete();
+                });
+                describe(database.desc, () => {
                     it('should throw when no encryption keys are set', async () => {
-                        const dbNoKeys = params.db;
-                        expectAsync(dbNoKeys.open()).toBeRejectedWithError('No encryption keys are set');
-                        await dbNoKeys.delete();
+                        expectAsync(db.open()).toBeRejectedWithError('No encryption keys are set');
                     });
                 });
             });
+        });
+        it('should not override create methods if immutable is set to false', async () => {
+            spyOn(immutable, 'immutable').and.callThrough();
+            const db = new TestDatabaseNotImmutable('TestDatabaseNotImmutable');
+            const [friend] = mockFriends(1);
+
+            await db.friends.add(friend);
+            expect(immutable.immutable).not.toHaveBeenCalled();
+            await db.delete();
         });
     });
 });
