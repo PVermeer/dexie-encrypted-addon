@@ -4,9 +4,10 @@
   "description": "Dexie Encryptify addon",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf -rf dist/ && tsc",
-    "test": "rimraf -rf coverage/ && karma start karma.conf.js",
-    "test:debug": "karma start test/karma.debug.conf.js"
+    "build": "npm run clean && tsc",
+    "test": "npm run clean && karma start karma.conf.js",
+    "test:debug": "karma start test/karma.debug.conf.js",
+    "clean": "rimraf -rf coverage/ && rimraf -rf dist/"
   },
   "author": "PVermeer",
   "license": "MIT",
