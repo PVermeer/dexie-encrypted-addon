@@ -10,6 +10,11 @@
     "test:debug": "karma start test/karma.debug.conf.js",
     "clean": "rimraf -rf coverage/ && rimraf -rf dist/"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "if git-branch-is master; then npm run test; fi"
+    }
+  },
   "author": "PVermeer",
   "license": "MIT",
   "dependencies": {
@@ -29,6 +34,8 @@
     "@types/lodash": "^4.14.149",
     "dexie": "^2.0.4",
     "faker": "^4.1.0",
+    "git-branch-is": "^3.1.0",
+    "husky": "^4.0.7",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "~4.4.1",
