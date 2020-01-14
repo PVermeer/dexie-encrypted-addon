@@ -1,17 +1,19 @@
 {
-  "name": "dexie-encryptify",
-  "version": "0.1.0",
-  "description": "Dexie Encryptify addon",
+  "name": "@pvermeer/testing-symantic-release",
+  "version": "0.0.0-development",
+  "description": "Testing",
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && tsc",
     "lint": "node_modules/.bin/tslint --project test/tsconfig.json",
     "test": "npm run clean && npm run lint && karma start karma.conf.js",
     "test:debug": "karma start test/karma.debug.conf.js",
-    "clean": "rimraf -rf coverage/ && rimraf -rf dist/"
+    "clean": "rimraf -rf coverage/ && rimraf -rf dist/",
+    "semantic-release": "semantic-release"
   },
   "husky": {
     "hooks": {
+      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi",
       "pre-push": "if git-branch-is master; then npm run test; fi"
     }
   },
@@ -27,6 +29,9 @@
     "@angular/compiler": "^8.2.14",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/core": "^8.2.14",
+    "@commitlint/cli": "^8.3.4",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/travis-cli": "^8.3.4",
     "@ngtools/webpack": "^8.3.21",
     "@types/faker": "^4.1.8",
     "@types/jasmine": "^3.5.0",
@@ -53,11 +58,16 @@
     "karma-typescript": "^4.1.1",
     "karma-webpack": "^4.0.2",
     "rimraf": "^3.0.0",
+    "semantic-release": "^16.0.1",
     "tslint": "^5.20.1",
     "typescript": "~3.5.3",
     "webpack": "^4.41.5"
   },
   "peerDependencies": {
     "dexie": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PVermeer/dexie-encryption-addon.git"
   }
 }
