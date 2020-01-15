@@ -1,6 +1,6 @@
 import Dexie from 'dexie';
 import faker from 'faker/locale/en';
-import { encrypted } from '../../src/encryptify';
+import { encrypted } from '../../src/encrypted';
 import { Encryption } from '../../src/encryption.class';
 
 export interface Friend {

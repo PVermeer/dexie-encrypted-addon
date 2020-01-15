@@ -11,7 +11,11 @@ function karmaConfig(config) {
 
     return {
         basePath: '../',
-        files: ['./test/index.ts'],
+        files: [
+            './test/index.ts',
+            // Include dist folder so they can be loaded when needed in tests
+            { pattern: './dist/**/*.js', included: false, watch: false }
+        ],
         frameworks: ['jasmine'],
         plugins: [
             'karma-jasmine',

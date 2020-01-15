@@ -6,12 +6,16 @@
 process.on('infrastructure_error', (error) => {
     console.error('infrastructure_error', error);
 });
-var stopper = require('karma').stopper
 
 function karmaConfig(config) {
     return {
         basePath: '',
-        files: ['./test/**/*.ts', './src/**/*.ts'],
+        files: [
+            './test/**/*.ts',
+            './src/**/*.ts',
+            // Include dist folder so they can be loaded when needed in tests
+            { pattern: './dist/**/*.js', included: false, watch: false }
+        ],
         exclude: ['./test/index.ts'],
         frameworks: ['jasmine', 'karma-typescript', 'detectBrowsers'],
         preprocessors: {

@@ -1,4 +1,4 @@
-import { StoreSchemas } from './encryptify';
+import { StoreSchemas } from './encrypted';
 
 /** @internal */
 export interface ModifiedKeys {

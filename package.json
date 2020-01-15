@@ -1,13 +1,32 @@
 {
-  "name": "@pvermeer/testing-symantic-release",
+  "name": "@pvermeer/dexie-encryption-addon",
   "version": "0.0.0-development",
   "description": "Testing",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/es6/index.js",
+  "author": "PVermeer",
+  "license": "MIT",
+  "keywords": [
+    "dexie",
+    "dexie.js",
+    "indexeddb",
+    "database",
+    "encryption"
+  ],
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
-    "build": "npm run clean && tsc",
-    "lint": "node_modules/.bin/tslint --project test/tsconfig.json",
-    "test": "npm run clean && npm run lint && karma start karma.conf.js",
-    "test:debug": "karma start test/karma.debug.conf.js",
+    "build": "npm run clean && npm run build:bundles && npm run build:es6 && npm run build:declaration",
+    "build:bundles": "webpack --config webpack.config.js",
+    "build:es6": "tsc -p src/tsconfig.json -m es6 --outDir dist/es6",
+    "build:declaration": "dts-bundle-generator src/index.ts -o dist/index.d.ts",
+    "lint": "tslint --project test/tsconfig.json",
+    "test": "npm run build && npm run lint && karma start karma.conf.js",
+    "test:debug": "npm run build && karma start test/karma.debug.conf.js",
     "clean": "rimraf -rf coverage/ && rimraf -rf dist/",
     "semantic-release": "semantic-release"
   },
@@ -17,8 +36,6 @@
       "pre-push": "if git-branch-is master; then npm run test; fi"
     }
   },
-  "author": "PVermeer",
-  "license": "MIT",
   "dependencies": {
     "@stablelib/base64": "^0.7.2",
     "@stablelib/utf8": "^0.10.1",
@@ -37,7 +54,9 @@
     "@types/jasmine": "^3.5.0",
     "@types/karma": "^3.0.5",
     "@types/lodash": "^4.14.149",
+    "@types/webpack": "^4.41.2",
     "dexie": "^2.0.4",
+    "dts-bundle-generator": "^3.3.1",
     "faker": "^4.1.0",
     "git-branch-is": "^3.1.0",
     "husky": "^4.0.7",
@@ -59,9 +78,12 @@
     "karma-webpack": "^4.0.2",
     "rimraf": "^3.0.0",
     "semantic-release": "^16.0.1",
+    "ts-loader": "^6.2.1",
     "tslint": "^5.20.1",
     "typescript": "~3.5.3",
-    "webpack": "^4.41.5"
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
   },
   "peerDependencies": {
     "dexie": "^2.0.4"
@@ -69,5 +91,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/PVermeer/dexie-encryption-addon.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/PVermeer/dexie-encryption-addon/issues"
+  },
+  "homepage": "https://github.com/PVermeer/dexie-encryption-addon#readme"
 }
