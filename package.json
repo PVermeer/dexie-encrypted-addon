@@ -1,7 +1,7 @@
 {
   "name": "@pvermeer/dexie-encrypted-addon",
   "version": "0.0.0-development",
-  "description": "Testing",
+  "description": "Addon for Dexie.js database to add encryption",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
   "author": "PVermeer",
@@ -86,6 +86,7 @@
     "nodemon": "^2.0.2",
     "rimraf": "^3.0.0",
     "semantic-release": "^16.0.1",
+    "semantic-release-npm-github-publish": "^1.4.0",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "tslint": "^5.20.1",
