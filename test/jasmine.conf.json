@@ -1,0 +1,9 @@
+{
+    "spec_dir": "",
+    "spec_files": [
+        "test/unit-tests/jasmine/**/*.ts"
+    ],
+    "helpers": [],
+    "stopSpecOnExpectationFailure": false,
+    "random": true
+}

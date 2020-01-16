@@ -1,8 +1,8 @@
 import faker from 'faker';
-import { Encryption } from '../../src/encryption.class';
-import * as hooks from '../../src/hooks';
-import * as immutable from '../../src/immutable';
-import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable } from '../mocks/mocks';
+import { Encryption } from '../../../src/encryption.class';
+import * as hooks from '../../../src/hooks';
+import * as immutable from '../../../src/immutable';
+import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable } from '../../mocks/mocks';
 
 describe('Encrypted databases', () => {
     // Should work for each positive database
@@ -317,11 +317,11 @@ describe('Encrypted databases', () => {
             // Faulty databases should throw
             databasesNegative.forEach(database => {
                 let db: ReturnType<typeof database.db>;
-                beforeEach(() => {
+                beforeEach(async () => {
                     db = database.db();
                 });
                 afterEach(async () => {
-                    db.delete();
+                    await db.delete();
                 });
                 describe(database.desc, () => {
                     it('should throw when no encryption keys are set', async () => {
@@ -335,6 +335,7 @@ describe('Encrypted databases', () => {
             const db = new TestDatabaseNotImmutable('TestDatabaseNotImmutable');
             const [friend] = mockFriends(1);
 
+            await db.open();
             await db.friends.add(friend);
             expect(immutable.immutable).not.toHaveBeenCalled();
             await db.delete();

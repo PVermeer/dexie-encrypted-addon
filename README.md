@@ -1,7 +1,8 @@
-Dexie Encryption Plugin
+Dexie Encrypted Addon
 ======
 
-[![Build Status](https://travis-ci.org/PVermeer/dexie-encryption-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encryption-addon)
+[![NPM Version][npm-image]][npm-url]
+[![Build Status](https://travis-ci.org/PVermeer/dexie-encrypted-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encrypted-addon)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Install over npm
@@ -10,12 +11,19 @@ Install over npm
 npm install TODO
 ```
 
-Encrypt your data the Dexie way!
+#### Encrypt your data the Dexie way!
 
 Plugin is written to be as easy to use as Dexie.js itself.
 Using $ on your keys will encrypt this key.
 Using # on the first key will hash this key with the document on creation.
 This will create an unique primary key based on the document itself.
+
+#### Wait for open
+Always open the database yourself. Dexie does not wait for all hooks to be subscribed (bug?).
+```js
+await db.open();
+```
+To help with this, the option 'autoOpen' has been disabled.
 
 #### Added Schema Syntax
 Symbol | Description
@@ -38,10 +46,10 @@ const db = new Dexie("FriendDatabase", {
 });
 db.version(1).stores({ friends: "#id, $name, $shoeSize, age" });
 
-// Wait for open
-db.open().then(() => {
+// Open the database
+await db.open();
+
 // Use Dexie
-});
 ```
 
 #### Example (Typescript)
@@ -65,7 +73,7 @@ class FriendsDatabase extends Dexie {
     public friends: Dexie.Table<Friend, string>;
     constructor(name: string, secret?: string) {
         super(name);
-        dexie-encrypted(this, { secretKey: secret });
+        encrypted(this, { secretKey: secret });
         this.version(1).stores({
             friends: '#id, $name, $shoeSize, age'
         });
@@ -74,18 +82,17 @@ class FriendsDatabase extends Dexie {
 
 const db = new FriendDatabase('FriendsDatabase', secret);
 
-// Wait for open
-db.open().then(() => {
-// Use Dexie
-});
+// Open the database
+await db.open();
 
+// Use Dexie
 ```
 API
 ---
 
 The packet exposes two exports:
 
-#### dexie-encrypted - addon
+#### encrypted - addon function
 ```ts
 /**
  * @secretKey Your previously saved secret.

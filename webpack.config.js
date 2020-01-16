@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const configLib = require('./config');
 
 const umdConfig = {
     entry: './src/index.ts',
@@ -7,14 +8,12 @@ const umdConfig = {
         path: path.resolve(__dirname, 'dist/'),
         filename: 'index.js',
         libraryTarget: 'umd',
-        library: 'dexieEncryptionAddon',
+        library: configLib.umdName,
         umdNamedDefine: true
     },
     mode: 'production',
     target: 'node',
-    externals: [nodeExternals({
-        importType: 'amd'
-    })],
+    externals: [nodeExternals()],
     module: {
         rules: [{
             test: /\.tsx?$/,
@@ -37,10 +36,10 @@ const bundleConfig = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'dexie-encrypted-addon.min.js',
         libraryTarget: 'window',
-        library: 'DexieEncryptionAddon',
+        library: configLib.umdName,
         umdNamedDefine: true
     },
-    mode: 'development',
+    mode: 'production',
     target: 'web',
     module: {
         rules: [{
@@ -55,7 +54,7 @@ const bundleConfig = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json']
     },
-    devtool: 'none'
+    devtool: 'source-map'
 };
 
 module.exports = [umdConfig, bundleConfig];

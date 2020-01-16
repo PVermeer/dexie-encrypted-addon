@@ -12,16 +12,17 @@ function karmaConfig(config) {
     return {
         basePath: '../',
         files: [
-            './test/index.ts',
-            // Include dist folder so they can be loaded when needed in tests
-            { pattern: './dist/**/*.js', included: false, watch: false }
+            './test/unit-tests/karma/index.ts',
+            // Serve dist folder so files can be loaded when needed in tests
+            { pattern: './dist/**/*.+(js|map)', included: false, watch: false }
         ],
         frameworks: ['jasmine'],
         plugins: [
             'karma-jasmine',
             'karma-jasmine-html-reporter',
             'karma-webpack',
-            'karma-chrome-launcher'
+            'karma-chrome-launcher',
+            'karma-mocha-reporter'
         ],
         preprocessors: {
             "**/*.ts": ['webpack'],
@@ -61,7 +62,7 @@ function karmaConfig(config) {
             }
         },
         browsers: ['ChromeDebugging'],
-        reporters: ['progress', 'kjhtml'],
+        reporters: ['mocha', 'kjhtml'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

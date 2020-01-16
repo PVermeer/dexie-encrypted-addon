@@ -1,5 +1,5 @@
 {
-  "name": "@pvermeer/dexie-encryption-addon",
+  "name": "@pvermeer/dexie-encrypted-addon",
   "version": "0.0.0-development",
   "description": "Testing",
   "main": "dist/index.js",
@@ -11,7 +11,8 @@
     "dexie.js",
     "indexeddb",
     "database",
-    "encryption"
+    "encryption",
+    "encrypted"
   ],
   "files": [
     "dist"
@@ -23,10 +24,13 @@
     "build": "npm run clean && npm run build:bundles && npm run build:es6 && npm run build:declaration",
     "build:bundles": "webpack --config webpack.config.js",
     "build:es6": "tsc -p src/tsconfig.json -m es6 --outDir dist/es6",
-    "build:declaration": "dts-bundle-generator src/index.ts -o dist/index.d.ts",
+    "build:declaration": "dts-bundle-generator --config dts-bundler.config.js",
     "lint": "tslint --project test/tsconfig.json",
-    "test": "npm run build && npm run lint && karma start karma.conf.js",
-    "test:debug": "npm run build && karma start test/karma.debug.conf.js",
+    "test": "npm run build && npm run lint && npm run test:jasmine && npm run test:karma",
+    "test:karma": "karma start test/karma.conf.js",
+    "test:karma:debug": "npm run build && karma start test/karma.debug.conf.js",
+    "test:jasmine": "jasmine --require=ts-node/register --config=test/jasmine.conf.json",
+    "test:jasmine:debug": "npm run build && nodemon --ext ts --exec jasmine --require=ts-node/register --config=test/jasmine.conf.json --reporter=jasmine-console-reporter",
     "clean": "rimraf -rf coverage/ && rimraf -rf dist/",
     "semantic-release": "semantic-release"
   },
@@ -60,6 +64,8 @@
     "faker": "^4.1.0",
     "git-branch-is": "^3.1.0",
     "husky": "^4.0.7",
+    "jasmine": "^3.5.0",
+    "jasmine-console-reporter": "^3.1.0",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "~4.4.1",
@@ -70,15 +76,18 @@
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.5.1",
+    "karma-mocha-reporter": "^2.2.5",
     "karma-opera-launcher": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-safari-launcher": "^1.0.0",
     "karma-safaritechpreview-launcher": "^2.0.2",
     "karma-typescript": "^4.1.1",
     "karma-webpack": "^4.0.2",
+    "nodemon": "^2.0.2",
     "rimraf": "^3.0.0",
     "semantic-release": "^16.0.1",
     "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
     "tslint": "^5.20.1",
     "typescript": "~3.5.3",
     "webpack": "^4.41.5",
@@ -90,10 +99,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PVermeer/dexie-encryption-addon.git"
+    "url": "https://github.com/PVermeer/dexie-encrypted-addon.git"
   },
   "bugs": {
-    "url": "https://github.com/PVermeer/dexie-encryption-addon/issues"
+    "url": "https://github.com/PVermeer/dexie-encrypted-addon/issues"
   },
-  "homepage": "https://github.com/PVermeer/dexie-encryption-addon#readme"
+  "homepage": "https://github.com/PVermeer/dexie-encrypted-addon#readme"
 }

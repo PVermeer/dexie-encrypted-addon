@@ -9,14 +9,15 @@ process.on('infrastructure_error', (error) => {
 
 function karmaConfig(config) {
     return {
-        basePath: '',
+        basePath: '../',
         files: [
-            './test/**/*.ts',
+            './test/unit-tests/karma/**/*.ts',
+            './test/mocks/**/*.ts',
             './src/**/*.ts',
-            // Include dist folder so they can be loaded when needed in tests
-            { pattern: './dist/**/*.js', included: false, watch: false }
+            // Serve dist folder so files can be loaded when needed in tests
+            { pattern: './dist/**/*.+(js|map)', included: false, watch: false }
         ],
-        exclude: ['./test/index.ts'],
+        exclude: ['./test/unit-tests/karma/index.ts'],
         frameworks: ['jasmine', 'karma-typescript', 'detectBrowsers'],
         preprocessors: {
             "**/*.ts": 'karma-typescript',
@@ -53,7 +54,7 @@ function karmaConfig(config) {
         client: {
             clearContext: false // leave Jasmine Spec Runner output visible in browser
         },
-        reporters: ['progress', 'karma-typescript'],
+        reporters: ['dots', 'karma-typescript'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,

@@ -6,7 +6,9 @@ import { immutable } from './immutable';
 import { ModifiedKeysTable, SchemaParser } from './schema-parser';
 
 export interface StoreSchemas { [tableName: string]: string | null; }
-type registeredAddons = Dexie & { pVermeerAddonsRegistered: { [addon: string]: boolean } };
+type DexieExtended = Dexie & {
+    pVermeerAddonsRegistered?: { [addon: string]: boolean }
+};
 
 /**
  * @secretKey Your previously saved secret
@@ -23,7 +25,7 @@ export interface EncryptedOptions {
  * *Example TypeScript:*
  * ```
  *  const secret = Encryption.createRandomEncryptionKey();
- *  class FriendsDatabase extends Dexie {
+ *  const db = class FriendsDatabase extends Dexie {
  *      public friends: Dexie.Table<Friend, string>;
  *      constructor(name: string, secret?: string) {
  *          super(name);
@@ -33,6 +35,7 @@ export interface EncryptedOptions {
  *          });
  *      }
  *  }
+ *  await db.open()
  * ```
  *
  * *Example JavaScript:*
@@ -44,19 +47,22 @@ export interface EncryptedOptions {
  *  db.version(1).stores({
  *      friends: '#id, $name, $shoeSize, age'
  *  });
+ *  await db.open()
  * ```
  * @method setOptions(string) Set options and return the addon.
  * @param options Set secret key and / or immutable create methods.
  * @returns The secret key (provided or generated)
  */
-export function encrypted(db: Dexie, options?: EncryptedOptions) {
+export function encrypted(db: DexieExtended, options?: EncryptedOptions) {
 
     // Register addon
-    const dbPVermeer = db as registeredAddons;
-    dbPVermeer.pVermeerAddonsRegistered = {
-        ...dbPVermeer.pVermeerAddonsRegistered,
+    db.pVermeerAddonsRegistered = {
+        ...db.pVermeerAddonsRegistered,
         encrypted: true
     };
+
+    // Disable auto open, developer must open the database manually.
+    db.close();
 
     let secret: string | undefined;
     let useImmutable = true;
@@ -66,7 +72,7 @@ export function encrypted(db: Dexie, options?: EncryptedOptions) {
         if (options.immutable !== undefined) { useImmutable = options.immutable; }
     }
 
-    if (useImmutable && !dbPVermeer.pVermeerAddonsRegistered.immutable) {
+    if (useImmutable && !db.pVermeerAddonsRegistered.immutable) {
         immutable(db);
     }
 
