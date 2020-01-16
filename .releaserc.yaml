@@ -1,5 +1,2 @@
 branch: master
-ci: false
-dryRun: false
-debug: false
-extends: "semantic-release-npm-github-publish"
+extends: "@jedmao/semantic-release-npm-github-config"
