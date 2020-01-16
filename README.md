@@ -1,14 +1,14 @@
 Dexie Encrypted Addon (rc)
 ======
 
-[![NPM Version][npm-image]][npm-url]
+[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
 [![Build Status](https://travis-ci.org/PVermeer/dexie-encrypted-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encrypted-addon)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 Install over npm
 ----------------
 ```
-npm install TODO
+npm install @pvermeer/dexie-encrypted-addon
 ```
 
 #### Encrypt your data the Dexie way!
@@ -34,15 +34,14 @@ $ | Encrypt this value
 #### Example (ES2016 / ES7)
 ```js
 import Dexie from 'dexie';
-import { dexie-encrypted } from 'TODO';
-import { Encryption } from 'TODO';
+import { encrypted, Encryption } from '@pvermeer/dexie-encrypted-addon';
 
 // Generate a random key
 const secret = Encryption.createRandomEncryptionKey();
 
 // Declare Database
 const db = new Dexie("FriendDatabase", {
-    addons: [dexie-encrypted.setOptions({ secretKey: secret })]
+    addons: [encrypted.setOptions({ secretKey: secret })]
 });
 db.version(1).stores({ friends: "#id, $name, $shoeSize, age" });
 
@@ -55,8 +54,7 @@ await db.open();
 #### Example (Typescript)
 ```js
 import Dexie from 'dexie';
-import { dexie-encrypted } from 'TODO';
-import { Encryption } from 'TODO';
+import { encrypted, Encryption } from '@pvermeer/dexie-encrypted-addon';
 
 interface Friend {
     id?: number;
@@ -147,5 +145,3 @@ Dexie.js
 ========
 
 Dexie.js is a wrapper library for indexedDB - the standard database in the browser. http://dexie.org
-
-
