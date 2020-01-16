@@ -1,4 +1,4 @@
-Dexie Encrypted Addon
+Dexie Encrypted Addon (rc)
 ======
 
 [![NPM Version][npm-image]][npm-url]
