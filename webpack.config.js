@@ -1,6 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const configLib = require('./config');
+const LicenseWebpackPlugin = require('license-webpack-plugin').LicenseWebpackPlugin;
 
 const umdConfig = {
     entry: './src/index.ts',
@@ -12,6 +13,9 @@ const umdConfig = {
         umdNamedDefine: true
     },
     mode: 'production',
+    optimization: {
+        minimize: false
+    },
     target: 'node',
     externals: [nodeExternals()],
     module: {
@@ -54,7 +58,13 @@ const bundleConfig = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json']
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    plugins: [
+        new LicenseWebpackPlugin({
+            perChunkOutput: false,
+            outputFilename: 'third-party-licenses'
+        })
+    ]
 };
 
 module.exports = [umdConfig, bundleConfig];
