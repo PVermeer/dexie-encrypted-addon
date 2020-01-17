@@ -45,6 +45,7 @@ const bundleConfig = {
     },
     mode: 'production',
     target: 'web',
+    externals: configLib.peerDependenciesMapped,
     module: {
         rules: [{
             test: /\.tsx?$/,

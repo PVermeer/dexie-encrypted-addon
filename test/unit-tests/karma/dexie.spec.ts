@@ -26,23 +26,21 @@ describe('Dexie', () => {
         });
     });
     describe('HTML script tag', () => {
-        beforeAll(() => {
-            return Promise.all([
-                new Promise(resolve => {
+        beforeAll(async () => {
+                await new Promise(resolve => {
                     const scriptDexie = document.createElement('script');
                     scriptDexie.src = 'https://unpkg.com/dexie@latest/dist/dexie.js';
                     scriptDexie.type = 'text/javascript';
                     scriptDexie.onload = () => resolve();
                     document.head.append(scriptDexie);
                 }),
-                new Promise(resolve => {
+                await new Promise(resolve => {
                     const scriptAddon = document.createElement('script');
                     scriptAddon.src = '/base/dist/dexie-encrypted-addon.min.js';
                     scriptAddon.type = 'text/javascript';
                     scriptAddon.onload = () => resolve();
                     document.head.append(scriptAddon);
-                })
-            ]);
+                });
         });
         it('should load Dexie.js', () => {
             expect(Dexie).toBeTruthy();
