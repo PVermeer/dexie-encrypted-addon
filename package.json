@@ -36,8 +36,8 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "if git-branch-is master; then commitlint -E HUSKY_GIT_PARAMS; fi",
-      "pre-push": "if git-branch-is master; then npm run test; fi"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "if git-branch-is -i -r \"master|next|next-major|beta|alpha|^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$\"; then npm run test; fi"
     }
   },
   "dependencies": {
