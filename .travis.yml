@@ -1,5 +1,14 @@
 language: node_js
 
+branches:
+  only:
+    - master
+    - next
+    - next-major
+    - beta
+    - alpha
+    - /^v\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/
+
 jobs:
   include:
     - stage: commit
