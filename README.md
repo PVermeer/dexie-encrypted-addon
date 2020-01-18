@@ -44,10 +44,15 @@ await db.open();
 To help with this, the option 'autoOpen' has been disabled.
 
 #### Indices
-Encrypted values will not be indexed. IndexedDB does not support index based on encryption. Doing where() calls would mean the whole collection has to be read and decrypted (unless someone has a better idea? PR's are always welcome :D). Implementing this yourself would be more performend when also modeling the database to support this.
+Encrypted values will not be indexed. IndexedDB does not support index based on encryption.
+Doing where() calls would mean the whole collection has to be read and decrypted (unless someone has a better idea? PR's are always welcome :D).
+Implementing this yourself would be more performend when also modeling the database to support this.
 
 #### Immutable
-By default immutablity is applied to all creation and update methods via overrides. Dexie does not do this by default. This is recommended so your original input will not change after changen the values to the encrypted string and creating an primary index key. This behavior can be disabled with the options object provided to the addon:
+By default immutablity is applied to all creation and update methods via overrides.
+Dexie does not do this by default.
+This is recommended so your original input object does not change after encrypting values or hashing the primary index key.
+This behavior can be disabled via the options object provided to the addon:
 ```ts
 interface EncryptedOptions {
     secretKey?: string;
@@ -56,8 +61,8 @@ interface EncryptedOptions {
 ```
 *Setting this to false can lead to unexpected / weird behavior in your application*
 
-#### Example (ES2016 / ES7)
-```ts
+#### Example (ES6)
+```js
 import Dexie from 'dexie';
 import { encrypted, Encryption } from '@pvermeer/dexie-encrypted-addon';
 
@@ -117,7 +122,7 @@ db.open()
 
 #### Example (HTML import)
 
-Bundled & minified UMD package: <https://unpkg.com/@pvermeer/dexie-encrypted-addon@latest/dist/dexie-encrypted-addon.min.js>.
+Bundled & minified package: <https://unpkg.com/@pvermeer/dexie-encrypted-addon@latest/dist/dexie-encrypted-addon.min.js>.
 
 Addon is export as namespace DexieEncryptedAddon
 
