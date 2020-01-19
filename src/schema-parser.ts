@@ -1,17 +1,14 @@
 import { StoreSchemas } from './encrypted';
 
-/** @internal */
 export interface ModifiedKeys {
     keys: string[];
     hashKey: string | null;
 }
 
-/** @internal */
 export interface ModifiedKeysTable {
     [prop: string]: ModifiedKeys;
 }
 
-/** @internal */
 export class SchemaParser {
 
     private schema: StoreSchemas;

@@ -6,6 +6,7 @@ import { immutable } from './immutable';
 import { ModifiedKeysTable, SchemaParser } from './schema-parser';
 
 export interface StoreSchemas { [tableName: string]: string | null; }
+
 type DexieExtended = Dexie & {
     pVermeerAddonsRegistered?: { [addon: string]: boolean }
 };
@@ -53,11 +54,12 @@ export interface EncryptedOptions {
  * @param options Set secret key and / or immutable create methods.
  * @returns The secret key (provided or generated)
  */
-export function encrypted(db: DexieExtended, options?: EncryptedOptions) {
+export function encrypted(db: Dexie, options?: EncryptedOptions) {
 
     // Register addon
-    db.pVermeerAddonsRegistered = {
-        ...db.pVermeerAddonsRegistered,
+    const dbExtended: DexieExtended = db;
+    dbExtended.pVermeerAddonsRegistered = {
+        ...dbExtended.pVermeerAddonsRegistered,
         encrypted: true
     };
 
@@ -72,7 +74,7 @@ export function encrypted(db: DexieExtended, options?: EncryptedOptions) {
         if (options.immutable !== undefined) { useImmutable = options.immutable; }
     }
 
-    if (useImmutable && !db.pVermeerAddonsRegistered.immutable) {
+    if (useImmutable && !dbExtended.pVermeerAddonsRegistered.immutable) {
         immutable(db);
     }
 

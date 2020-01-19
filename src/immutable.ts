@@ -6,12 +6,12 @@ type DexieExtended = Dexie & {
     pVermeerAddonsRegistered?: { [addon: string]: boolean }
 };
 
-/** @internal */
-export function immutable(db: DexieExtended) {
+export function immutable(db: Dexie) {
 
     // Register addon
-    db.pVermeerAddonsRegistered = {
-        ...db.pVermeerAddonsRegistered,
+    const dbExtended: DexieExtended = db;
+    dbExtended.pVermeerAddonsRegistered = {
+        ...dbExtended.pVermeerAddonsRegistered,
         immutable: true
     };
 
