@@ -65,6 +65,10 @@
         "ban-keywords",
         "allow-pascal-case"
       ]
-    }
+    },
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ]
   }
 }
