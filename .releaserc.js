@@ -1,7 +1,24 @@
 // @ts-check
-const path = require('path');
-const gitBranch = require('git-branch').sync(path.resolve(__dirname, 'PVermeer/dexie-encrypted-addon'));
 
-console.log('Git branch: ' + gitBranch);
-
-module.exports = {};
+module.exports = {
+  plugins: [
+    '@semantic-release/commit-analyzer',
+    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/changelog',
+    ],
+    [
+      "@semantic-release/npm",
+    ],
+    [
+      '@semantic-release/github',
+      {
+        assets: [
+          'CHANGELOG.md',
+          'package.json',
+          'package-lock.json'
+        ]
+      }
+    ]
+  ]
+};
