@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const configLib = require('./config');
 const LicenseWebpackPlugin = require('license-webpack-plugin').LicenseWebpackPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const umdConfig = {
     entry: './src/index.ts',
@@ -64,6 +65,18 @@ const bundleConfig = {
         new LicenseWebpackPlugin({
             perChunkOutput: false,
             outputFilename: 'third-party-licenses'
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+            reportFilename: '../reports/webpack-report.html',
+            generateStatsFile: true,
+            statsFilename: '../reports/webpack-stats.json',
+            statsOptions: {
+                source: false,
+                usedExports: true,
+                chunkModules: false
+            }
         })
     ]
 };
