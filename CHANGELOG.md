@@ -5,10 +5,6 @@
 
 * **release:** changelog + version should now update ([e813726](https://github.com/PVermeer/dexie-encrypted-addon/commit/e8137263efbabc0d51bc03cc87efd609895b27ec))
 
-# Changelog
-
-All notable changes to this project will be documented in this file. See
-[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
 ## [1.0.5](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.4...v1.0.5) (2020-01-20)
 
