@@ -39,7 +39,7 @@ const bundleConfig = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'dexie-encrypted-addon.min.js',
+        filename: `${configLib.packageName}.min.js`,
         libraryTarget: 'window',
         library: configLib.umdName,
         umdNamedDefine: true

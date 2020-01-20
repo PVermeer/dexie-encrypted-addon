@@ -4,6 +4,13 @@
 // @ts-ignore
 const packageJson = require('./package.json');
 
+const packageName = (packageName) => {
+    const onlyName = packageJson.name.includes('@') ?
+        packageName.split('/')[1] :
+        packageName;
+
+    return onlyName;
+}
 const umdName = (packageName) => {
     const onlyName = packageJson.name.includes('@') ?
         packageName.split('/')[1] :
@@ -26,9 +33,11 @@ function mapPeerDependencies() {
 
 const configLib = {
 
-    packageName: packageJson.name,
+    packageName: packageName(packageJson.name),
 
     umdName: umdName(packageJson.name),
+
+    version: packageJson.version,
 
     peerDependencies: Object.keys(packageJson.peerDependencies),
 
@@ -36,6 +45,6 @@ const configLib = {
 
 };
 
-console.log(configLib, '\n');
+console.log('\nUsing config: \n\n', configLib, '\n');
 
 module.exports = configLib;
