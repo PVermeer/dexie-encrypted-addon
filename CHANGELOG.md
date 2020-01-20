@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.7...v1.0.8) (2020-01-20)
+
+
+### Bug Fixes
+
+* **release:** changelog + version should now update ([e813726](https://github.com/PVermeer/dexie-encrypted-addon/commit/e8137263efbabc0d51bc03cc87efd609895b27ec))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See
