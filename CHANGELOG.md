@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.8...v1.0.9) (2020-01-20)
+
+
+### Bug Fixes
+
+* **release:** should now create a tarball of package in GitHub release ([9a7efd3](https://github.com/PVermeer/dexie-encrypted-addon/commit/9a7efd355cae87f07c12c40856fdc00cc938908c))
+
 ## [1.0.8](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.7...v1.0.8) (2020-01-20)
 
 

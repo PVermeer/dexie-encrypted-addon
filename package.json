@@ -1,6 +1,6 @@
 {
   "name": "@pvermeer/dexie-encrypted-addon",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Addon for Dexie.js database to add encryption",
   "main": "dist/index.js",
   "module": "dist/es6/index.js",
