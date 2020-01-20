@@ -22,9 +22,14 @@ describe('Dexie', () => {
             expect(DexieEncryptionAddonReq.encrypted).toBeTruthy();
             expect(DexieEncryptionAddonReq.Encryption).toBeTruthy();
         });
-        it('should be able to create a database with encryption', async () => {
+        it('should be able to use Encryption class', async () => {
             const test = DexieEncryptionAddonReq.Encryption.createRandomEncryptionKey();
             expect(typeof test === 'string').toBeTrue();
+        });
+        it('should be able to use encrypted addon', async () => {
+            const secret = DexieEncryptionAddonReq.Encryption.createRandomEncryptionKey();
+            const test = DexieEncryptionAddonReq.encrypted.setOptions({ immutable: true, secretKey: secret });
+            expect(typeof test === 'function').toBeTrue();
         });
     });
 });
