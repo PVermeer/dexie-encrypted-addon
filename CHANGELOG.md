@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.4...v1.0.5) (2020-01-20)
+
+
+### Bug Fixes
+
+* **next:** next now only releases on next channel ([a3e86ee](https://github.com/PVermeer/dexie-encrypted-addon/commit/a3e86ee222c2a7d34037fb5a8be15921e2a1ae13))
+
 ## [1.0.4](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.3...v1.0.4) (2020-01-20)
 
 
