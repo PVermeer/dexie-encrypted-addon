@@ -8,10 +8,10 @@
     "removeComments": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "CommonJS",
+    "module": "ES2015",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es5",
+    "target": "ES5",
     "typeRoots": [
       "node_modules/@types",
       "./types"
@@ -29,5 +29,6 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
-  }
+  },
+  "files": ["./src/index.ts"]
 }

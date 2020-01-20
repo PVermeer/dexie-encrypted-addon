@@ -24,6 +24,11 @@ function karmaConfig(config) {
         },
         karmaTypescriptConfig: {
             tsconfig: './test/tsconfig.json',
+            bundlerOptions: {
+                transforms: [
+                    require("karma-typescript-es6-transform")()
+                ]
+            },
             coverageOptions: {
                 threshold: {
                     global: {

@@ -45,6 +45,9 @@ const bundleConfig = {
         umdNamedDefine: true
     },
     mode: 'production',
+    optimization: {
+        minimize: true
+    },
     target: 'web',
     externals: configLib.peerDependenciesMapped,
     module: {
@@ -54,11 +57,14 @@ const bundleConfig = {
             exclude: /node_modules/,
             options: {
                 configFile: '../src/tsconfig.json'
-            }
+            },
         }]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js', '.json']
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+        alias: {
+            lodash: 'lodash-es'
+        }
     },
     devtool: 'source-map',
     plugins: [
