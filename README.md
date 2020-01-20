@@ -31,7 +31,7 @@ const friend = '#id, $name, age';
     shoeSize: 42 // Not indexed
 }
 ```
-Using **$** on your keys will encrypt this key.
+Using **$** on your keys will encrypt these keys.
 
 Using **#** on the first key will hash this key with the document on creation.
 This will create an unique primary key based on the document itself and will update or create the key on the document itself.
