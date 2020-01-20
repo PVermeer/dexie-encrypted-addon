@@ -1,8 +1,7 @@
-const gitBranch = require('git-branch').sync();
+// @ts-check
+const path = require('path');
+const gitBranch = require('git-branch').sync(path.resolve(__dirname, 'PVermeer/dexie-encrypted-addon'));
 
-console.log('AAAAAAAAAAAAAAAAAA ' + gitBranch);
+console.log('Git branch: ' + gitBranch);
 
-module.exports = {
-  extends: '@jedmao/semantic-release-npm-github-config',
-  branch: 'next'
-};
+module.exports = {};
