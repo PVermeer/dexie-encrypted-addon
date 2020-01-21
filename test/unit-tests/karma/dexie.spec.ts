@@ -45,7 +45,7 @@ describe('Dexie', () => {
         it('should load Dexie.js', () => {
             expect(Dexie).toBeTruthy();
         });
-        it('should load DexieEncryptionAddon.js', () => {
+        it('should load DexieEncryptionAddon', () => {
             expect(DexieEncryptedAddon).toBeTruthy();
             expect(DexieEncryptedAddon.encrypted).toBeTruthy();
             expect(DexieEncryptedAddon.Encryption).toBeTruthy();

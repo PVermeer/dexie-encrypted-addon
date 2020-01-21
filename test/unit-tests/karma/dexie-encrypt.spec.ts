@@ -71,7 +71,7 @@ describe('Encrypted databases', () => {
                     });
                     it('should be called on bulkPut()', async () => {
                         /*
-                        * For v3 of Dezie
+                        * For v3 of Dexie
                         */
                         // const getFriends = await db.friends.bulkGet(hashedIds);
                         const friends2 = mockFriends();
@@ -170,7 +170,7 @@ describe('Encrypted databases', () => {
                     const hashedIds = friends.map(friend => Encryption.hash(friend));
                     const hashedDocuments = friends.map((friend, i) => ({ ...friend, id: hashedIds[i] }));
 
-                    /* For v3 of Dezie */
+                    /* For v3 of Dexie */
                     // const getFriends = await db.friends.bulkGet(hashedIds);
                     const getFriends = await Promise.all(hashedIds.map(id => db.friends.get(id)));
                     expect(getFriends).toEqual(hashedDocuments);
@@ -200,7 +200,7 @@ describe('Encrypted databases', () => {
                         const hashedDocuments = friends.map((friend, i) => ({ ...friend, id: hashedIds[i] }));
 
                         /*
-                        * For v3 of Dezie
+                        * For v3 of Dexie
                         */
                         // const getFriends = await db.friends.bulkGet(hashedIds);
                         const getFriends = await Promise.all(hashedIds.map(id => db.friends.get(id)));
@@ -228,7 +228,7 @@ describe('Encrypted databases', () => {
                         const hashedDocuments = friends.map((friend, i) => ({ ...friend, id: hashedIds[i] }));
 
                         /*
-                        * For v3 of Dezie
+                        * For v3 of Dexie
                         */
                         // const getFriends = await db.friends.bulkGet(hashedIds);
                         const getFriends = await Promise.all(hashedIds.map(id => db.friends.get(id)));
@@ -239,7 +239,7 @@ describe('Encrypted databases', () => {
                         await db.friends.bulkPut(hashedDocuments2);
 
                         /*
-                        * For v3 of Dezie
+                        * For v3 of Dexie
                         */
                         // const getFriends = await db.friends.bulkGet(hashedIds);
                         const getFriends2 = await Promise.all(hashedIds.map(id => db.friends.get(id)));

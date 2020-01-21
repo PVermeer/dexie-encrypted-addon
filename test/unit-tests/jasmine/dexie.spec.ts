@@ -4,7 +4,7 @@ import { encrypted, Encryption } from '../../../src';
 declare interface DexieEncryptedAddon { encrypted: typeof encrypted; Encryption: typeof Encryption; }
 
 /*
- * Lib is not really ment for node but package should be able to be required in node.
+ * Lib is not really meant for node but package should be able to be required in node.
  */
 describe('Dexie', () => {
     describe('Node require', () => {
