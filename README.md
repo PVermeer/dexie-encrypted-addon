@@ -1,7 +1,8 @@
 Dexie Encrypted Addon (rc)
 ======
 
-[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
+[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon/latest.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
+[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon/next.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
 [![Build Status](https://travis-ci.org/PVermeer/dexie-encrypted-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encrypted-addon)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
@@ -49,9 +50,12 @@ Doing where() calls would mean the whole collection has to be read and decrypted
 Implementing this yourself would be more performend when also modeling the database to support this.
 
 #### Immutable
-By default immutablity is applied to all creation and update methods via overrides.
-Dexie does not do this by default.
+Dexie does not do immutability by default.
 This is recommended so your original input object does not change after encrypting values or hashing the primary index key.
+
+By default immutablity is applied to all creation and update methods via overrides via ![npm (prod) dependency version (scoped)](https://img.shields.io/npm/dependency-version/@pvermeer/dexie-encrypted-addon/@pvermeer/dexie-immutable-addon).
+The immutable addon is loaded with this addon so you don't have to add it.
+
 This behavior can be disabled via the options object provided to the addon:
 ```ts
 interface EncryptedOptions {
