@@ -1,7 +1,6 @@
 import faker from 'faker';
 import { Encryption } from '../../../src/encryption.class';
 import * as hooks from '../../../src/hooks';
-import * as immutable from '../../../src/immutable';
 import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable } from '../../mocks/mocks';
 
 describe('Encrypted databases', () => {
@@ -10,7 +9,6 @@ describe('Encrypted databases', () => {
         describe(database.desc, () => {
             let db: ReturnType<typeof database.db>;
             beforeEach(async () => {
-                spyOn(immutable, 'immutable').and.callThrough();
                 db = database.db();
                 await db.open();
                 expect(db.isOpen()).toBeTrue();
@@ -18,10 +16,21 @@ describe('Encrypted databases', () => {
             afterEach(async () => {
                 await db.delete();
             });
-            it('should override create methods', async () => {
+            it('should override create / mutate methods', async () => {
+                const overrideMethods = [
+                    'add',
+                    'bulkAdd',
+                    'put',
+                    'bulkPut',
+                    'update'
+                ];
                 const [friend] = mockFriends(1);
                 await db.friends.add(friend);
-                expect(immutable.immutable).toHaveBeenCalled();
+
+                overrideMethods.forEach(method => {
+                    expect(db.Table.prototype[method].toString())
+                        .toEqual(jasmine.stringMatching('cloneDeep'));
+                });
             });
             describe('Hooks', () => {
                 let friends: Friend[];
@@ -331,13 +340,13 @@ describe('Encrypted databases', () => {
             });
         });
         it('should not override create methods if immutable is set to false', async () => {
-            spyOn(immutable, 'immutable').and.callThrough();
+            // spyOn(immutableSpy, 'immutable').and.callThrough();
             const db = new TestDatabaseNotImmutable('TestDatabaseNotImmutable');
             const [friend] = mockFriends(1);
 
             await db.open();
             await db.friends.add(friend);
-            expect(immutable.immutable).not.toHaveBeenCalled();
+            // expect(immutableSpy.immutable).not.toHaveBeenCalled();
             await db.delete();
         });
     });

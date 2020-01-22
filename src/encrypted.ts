@@ -2,7 +2,7 @@
 import Dexie from 'dexie';
 import { Encryption } from './encryption.class';
 import { decryptOnReading, encryptOnCreation, encryptOnUpdating } from './hooks';
-import { immutable } from './immutable';
+import { immutable } from '@pvermeer/dexie-immutable-addon';
 import { ModifiedKeysTable, SchemaParser } from './schema-parser';
 
 export interface StoreSchemas { [tableName: string]: string | null; }

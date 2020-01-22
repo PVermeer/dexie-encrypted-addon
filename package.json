@@ -41,9 +41,9 @@
     }
   },
   "dependencies": {
+    "@pvermeer/dexie-immutable-addon": "^1.0.0-beta.1",
     "@stablelib/base64": "^0.7.2",
     "@stablelib/utf8": "^0.10.1",
-    "lodash": "^4.17.15",
     "tweetnacl": "^1.0.1"
   },
   "devDependencies": {
