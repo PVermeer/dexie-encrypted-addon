@@ -1,3 +1,10 @@
+# [1.1.0-beta.1](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.9...v1.1.0-beta.1) (2020-01-22)
+
+
+### Features
+
+* **immutable:** moved immutable to its own package ([18355b1](https://github.com/PVermeer/dexie-encrypted-addon/commit/18355b1dbe176105a4ee860aa9deea9d5476eee6))
+
 ## [1.0.9](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.8...v1.0.9) (2020-01-20)
 
 
