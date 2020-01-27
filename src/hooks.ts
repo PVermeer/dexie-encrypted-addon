@@ -42,6 +42,7 @@ export function decryptOnReading(
     keysObj: ModifiedKeys,
     encryption: Encryption
 ) {
+    if (!document) { return document; }
     keysObj.keys.forEach(key => {
         if (document[key]) { document[key] = encryption.decrypt(document[key]); }
     });

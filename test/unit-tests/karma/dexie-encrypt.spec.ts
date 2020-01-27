@@ -304,6 +304,10 @@ describe('Encrypted databases', () => {
                     const friend = await db.friends.get(id);
                     expect(friend).toEqual({ ...friendsRead[4], id });
                 });
+                it('should be undefined when no id matches', async () => {
+                    const friend = await db.friends.get('svsdv');
+                    expect(friend).toBeUndefined();
+                });
             });
             describe('Where()', () => {
                 let friendsRead: Friend[];
