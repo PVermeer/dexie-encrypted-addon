@@ -63,6 +63,9 @@ function karmaConfig(config) {
         },
         browsers: ['ChromeDebugging'],
         reporters: ['mocha', 'kjhtml'],
+        mochaReporter: {
+            ignoreSkipped: true
+        },
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
