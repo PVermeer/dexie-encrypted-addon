@@ -1,3 +1,10 @@
+# [1.1.0-beta.2](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2020-01-27)
+
+
+### Bug Fixes
+
+* **reading:** now returns undefined when doc is undefined ([90e5cde](https://github.com/PVermeer/dexie-encrypted-addon/commit/90e5cded38841391949135af93a888c43a1beeea))
+
 # [1.1.0-beta.1](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.9...v1.1.0-beta.1) (2020-01-22)
 
 
