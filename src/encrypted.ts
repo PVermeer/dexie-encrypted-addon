@@ -82,8 +82,8 @@ export function encrypted(db: Dexie, options?: EncryptedOptions) {
     const encryption = new Encryption(secret);
 
     // Get the encryption keys from the schema and return the function with a clean schema.
-    db.Version.prototype._parseStoresSpec = Dexie.override(
-        db.Version.prototype._parseStoresSpec,
+    (db.Version.prototype as any)._parseStoresSpec = Dexie.override(
+        (db.Version.prototype as any)._parseStoresSpec,
         (origFunc) =>
 
             function (this: any, storesSpec: StoreSchemas, outSchema: any) {

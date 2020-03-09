@@ -62,7 +62,7 @@
     "@types/karma": "^3.0.8",
     "@types/lodash": "^4.14.149",
     "@types/lodash-es": "^4.17.3",
-    "dexie": "^2.0.4",
+    "dexie": "^3.0.0-rc.5",
     "faker": "^4.1.0",
     "git-branch-is": "^3.1.0",
     "husky": "^4.2.3",
@@ -96,7 +96,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "peerDependencies": {
-    "dexie": "^2.0.4"
+    "dexie": "^3.0.0-rc.5"
   },
   "repository": {
     "type": "git",
