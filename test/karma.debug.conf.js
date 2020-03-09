@@ -14,15 +14,15 @@ function karmaConfig(config) {
         files: [
             './test/unit-tests/karma/index.ts',
             // Serve dist folder so files can be loaded when needed in tests
-            { pattern: './dist/**/*.+(js|map)', included: false, watch: false }
+            { pattern: './dist/**/*.+(js|map)', included: false, watched: false }
         ],
         frameworks: ['jasmine'],
         plugins: [
             'karma-jasmine',
-            'karma-jasmine-html-reporter',
             'karma-webpack',
             'karma-chrome-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-jasmine-html-reporter'
         ],
         preprocessors: {
             "**/*.ts": ['webpack'],
@@ -64,15 +64,23 @@ function karmaConfig(config) {
         browsers: ['ChromeDebugging'],
         reporters: ['mocha', 'kjhtml'],
         mochaReporter: {
-            ignoreSkipped: true
+            ignoreSkipped: true,
+            maxLogLines: -1
+        },
+        jasmineHtmlReporter: {
+            suppressFailed: true
         },
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
+        browserConsoleLogOptions: {
+            level: 'off',
+            terminal: false
+        },
         autoWatch: true,
         singleRun: false,
         restartOnFileChange: true
-    }
+    };
 }
 
 module.exports = function (config) {
