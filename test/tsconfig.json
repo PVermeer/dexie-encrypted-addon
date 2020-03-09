@@ -6,6 +6,6 @@
   },
   "include": [
     "../test",
-    "../src"
+    "../types"
   ]
 }
