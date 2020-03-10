@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { Encryption } from '../../../src/encryption.class';
 import * as hooks from '../../../src/hooks';
-import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable } from '../../mocks/mocks';
+import { databasesNegative, databasesPositive, Friend, mockFriends, TestDatabaseNotImmutable, TestDatabase } from '../../mocks/mocks';
 
 describe('Encrypted databases', () => {
     // Should work for each positive database
@@ -324,6 +324,19 @@ describe('Encrypted databases', () => {
                 });
             });
         });
+    });
+    it('should encrypt lastName', async () => {
+        const db = new TestDatabase('TestEncryptLastName');
+        await db.open();
+        expect(db.isOpen()).toBeTrue();
+        const iDb = db.backendDB();
+        const [friend] = mockFriends(1);
+        const id = await db.friends.add(friend);
+        const request = iDb.transaction('friends', 'readonly').objectStore('friends').get(id);
+        await new Promise(resolve => request.onsuccess = resolve);
+        const friendRaw = request.result as Friend;
+        expect(Object.keys(friendRaw)).toEqual(jasmine.arrayContaining(Object.keys(friend)));
+        expect(friendRaw.lastName).not.toBe(friend.lastName);
     });
     describe('Negative', () => {
         describe('Faulty databases', () => {

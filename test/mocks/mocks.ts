@@ -12,7 +12,7 @@ export interface Friend {
     shoeSize: number;
 }
 
-class TestDatabase extends Dexie {
+export class TestDatabase extends Dexie {
     public friends: Dexie.Table<Friend, string>;
     constructor(name: string, secret?: string) {
         super(name);
