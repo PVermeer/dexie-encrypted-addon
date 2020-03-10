@@ -100,25 +100,26 @@ export function encrypted(db: Dexie, options?: EncryptedOptions) {
     db.on('ready', () => {
 
         if (!encryptSchema || !Object.keys(encryptSchema).length) {
-            throw new Error('No encryption keys are set');
+            console.warn('DEXIE ENCRYPT ADDON: No encryption keys are set');
+        } else {
+
+            // Set encryption on the tables via the create and update hook.
+            Object.entries(encryptSchema).forEach(([table, keysObj]) => {
+                const dexieTable = db.table(table);
+
+                dexieTable.hook('creating', (primaryKey, document) =>
+                    encryptOnCreation(primaryKey, document, keysObj, encryption)
+                );
+
+                dexieTable.hook('updating', (changes, _primaryKey) =>
+                    encryptOnUpdating(changes, _primaryKey, keysObj, encryption)
+                );
+
+                dexieTable.hook('reading', document =>
+                    decryptOnReading(document, keysObj, encryption)
+                );
+            });
         }
-
-        // Set encryption on the tables via the create and update hook.
-        Object.entries(encryptSchema).forEach(([table, keysObj]) => {
-            const dexieTable = db.table(table);
-
-            dexieTable.hook('creating', (primaryKey, document) =>
-                encryptOnCreation(primaryKey, document, keysObj, encryption)
-            );
-
-            dexieTable.hook('updating', (changes, _primaryKey) =>
-                encryptOnUpdating(changes, _primaryKey, keysObj, encryption)
-            );
-
-            dexieTable.hook('reading', document =>
-                decryptOnReading(document, keysObj, encryption)
-            );
-        });
 
     });
 

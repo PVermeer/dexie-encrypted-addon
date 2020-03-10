@@ -337,8 +337,10 @@ describe('Encrypted databases', () => {
                     await db.delete();
                 });
                 describe(database.desc, () => {
-                    it('should throw when no encryption keys are set', async () => {
-                        expectAsync(db.open()).toBeRejectedWithError('No encryption keys are set');
+                    it('should warn when no encryption keys are set', async () => {
+                        spyOn(console, 'warn').and.callFake(() => void 0);
+                        await db.open();
+                        expect(console.warn).toHaveBeenCalledWith('DEXIE ENCRYPT ADDON: No encryption keys are set');
                     });
                 });
             });
