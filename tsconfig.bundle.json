@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "removeComments": false
+  },
+  "files": [
+    "./src/index.ts"
+  ],
+  "include": [
+    "./src"
+  ]
+}
