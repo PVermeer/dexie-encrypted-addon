@@ -1,3 +1,11 @@
+# [2.0.0-beta.2](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2020-03-16)
+
+
+### Bug Fixes
+
+* declarations should now work again ([cab1862](https://github.com/PVermeer/dexie-encrypted-addon/commit/cab1862d94fd302e6c334d5204e8c3132d6150f4))
+* when no keys are set displays now a warning instead of throwing ([1e706f5](https://github.com/PVermeer/dexie-encrypted-addon/commit/1e706f5025f1987ef7ec169aed70a5875a0ed53b))
+
 # [2.0.0-beta.1](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.1.0-beta.2...v2.0.0-beta.1) (2020-03-09)
 
 
