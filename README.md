@@ -1,8 +1,8 @@
-Dexie Encrypted Addon (rc)
+Dexie Encrypted Addon
 ======
 
 [![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon/latest.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
-[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon/next.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
+[![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-encrypted-addon/beta.svg)](https://www.npmjs.com/package/@pvermeer/dexie-encrypted-addon)
 [![Build Status](https://travis-ci.org/PVermeer/dexie-encrypted-addon.svg?branch=master)](https://travis-ci.org/PVermeer/dexie-encrypted-addon)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
@@ -13,9 +13,18 @@ Install over npm
 npm install @pvermeer/dexie-encrypted-addon
 ```
 
+#### Dexie.js v3
+Dexie Encrypted Addon (>= v2) depends on Dexie.js v3. At the time of writing Dexie v3 is in the RC stage. Too install this version you have to use the @next npm version.
+```
+npm install dexie@next
+```
+
+
+Documentation
+----------------
 #### Encrypt your data the Dexie way!
 
-Plugin is written to be as easy to use as Dexie.js itself.
+Addon is written to be as easy to use as Dexie.js itself.
 
 #### Added Schema Syntax
 Symbol | Description
