@@ -14,7 +14,7 @@ npm install @pvermeer/dexie-encrypted-addon
 ```
 
 #### Dexie.js v3
-Dexie Encrypted Addon (>= v2) depends on Dexie.js v3. At the time of writing Dexie v3 is in the RC stage. Too install this version you have to use the @next npm version.
+Dexie Encrypted Addon (>= v2) depends on Dexie.js v3. At the time of writing Dexie v3 is in the RC stage. To install this version you have to use the @next npm version.
 ```
 npm install dexie@next
 ```
