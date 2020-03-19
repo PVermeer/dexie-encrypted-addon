@@ -7,18 +7,24 @@ Dexie Encrypted Addon
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
+This addon can be used as a stand-alone addon for Dexie.js yet is also part of dexie-addon-suite [![NPM Version](https://img.shields.io/npm/v/@pvermeer/dexie-addon-suite/latest.svg)](https://www.npmjs.com/package/@pvermeer/dexie-addon-suite)
+ that combines a number of addons for Dexie. It contains code to combine some addons like populated rxjs observables.
+
 Install over npm
 ----------------
 ```
 npm install @pvermeer/dexie-encrypted-addon
 ```
 
-#### Dexie.js v3
-Dexie Encrypted Addon (>= v2) depends on Dexie.js v3. At the time of writing Dexie v3 is in the RC stage. Too install this version you have to use the @next npm version.
+#### Dexie.js
+Dexie Encrypted Addon depends on Dexie.js v3. 
+```
+npm install dexie
+```
+At the time of writing Dexie v3 is in the RC stage. To install this version you have to use the @next npm version. Current version of Dexie.js: [![NPM Version](https://img.shields.io/npm/v/dexie/latest.svg)](https://www.npmjs.com/package/dexie)
 ```
 npm install dexie@next
 ```
-
 
 Documentation
 ----------------
