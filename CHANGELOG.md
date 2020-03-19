@@ -1,3 +1,10 @@
+# [2.0.0-beta.3](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2020-03-19)
+
+
+### Bug Fixes
+
+* **readme:** updated readme ([bc95d1b](https://github.com/PVermeer/dexie-encrypted-addon/commit/bc95d1b610de2a7792405c8cc674aa93c0888775))
+
 # [2.0.0-beta.2](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2020-03-16)
 
 
