@@ -35,7 +35,6 @@ export class Encryption {
     /**
      * Encrypt any value.
      * @param json Any non-circulair value.
-     * @param key Secret key to encrypt with.
      */
     public encrypt(json: any): string {
         if (!json) { return json; }
@@ -55,7 +54,6 @@ export class Encryption {
     /**
      * Decrypt values.
      * @param json Any non-circulair value.
-     * @param key Secret key to decrypt with.
      */
     public decrypt(messageWithNonce: string): any {
         const messageWithNonceAsUint8Array = decodeBase64(messageWithNonce);
