@@ -1,3 +1,10 @@
+# [2.0.0-beta.5](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2020-10-21)
+
+
+### Features
+
+* **dexie-3:** updated to dexie 3 + dockerized environment ([3651457](https://github.com/PVermeer/dexie-encrypted-addon/commit/3651457135c9fde509ea3df602a927caf5ca1b73))
+
 # [2.0.0-beta.4](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2020-03-23)
 
 
