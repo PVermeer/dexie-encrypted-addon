@@ -1,3 +1,49 @@
+# [2.0.0-beta.5](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2020-10-21)
+
+
+### Features
+
+* **dexie-3:** updated to dexie 3 + dockerized environment ([3651457](https://github.com/PVermeer/dexie-encrypted-addon/commit/3651457135c9fde509ea3df602a927caf5ca1b73))
+
+# [2.0.0-beta.4](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2020-03-23)
+
+
+### Bug Fixes
+
+* **declarations:** added support for older TS versions ([1acdd40](https://github.com/PVermeer/dexie-encrypted-addon/commit/1acdd403f603e630dfd4f5c3b68cab6ef2f824d1))
+
+# [2.0.0-beta.3](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2020-03-19)
+
+
+### Bug Fixes
+
+* **readme:** updated readme ([bc95d1b](https://github.com/PVermeer/dexie-encrypted-addon/commit/bc95d1b610de2a7792405c8cc674aa93c0888775))
+
+# [2.0.0-beta.2](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2020-03-16)
+
+
+### Bug Fixes
+
+* declarations should now work again ([cab1862](https://github.com/PVermeer/dexie-encrypted-addon/commit/cab1862d94fd302e6c334d5204e8c3132d6150f4))
+* when no keys are set displays now a warning instead of throwing ([1e706f5](https://github.com/PVermeer/dexie-encrypted-addon/commit/1e706f5025f1987ef7ec169aed70a5875a0ed53b))
+
+# [2.0.0-beta.1](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.1.0-beta.2...v2.0.0-beta.1) (2020-03-09)
+
+
+* feat(dexie)!: updated dexie to v3 rc ([2a43ae8](https://github.com/PVermeer/dexie-encrypted-addon/commit/2a43ae8e2cc6b0beb7977441320b666c6bdde267))
+
+
+### BREAKING CHANGES
+
+* updated to Dexie v3 RC5 to be more inline with the other addons
+
+# [1.1.0-beta.2](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2020-01-27)
+
+
+### Bug Fixes
+
+* **reading:** now returns undefined when doc is undefined ([90e5cde](https://github.com/PVermeer/dexie-encrypted-addon/commit/90e5cded38841391949135af93a888c43a1beeea))
+
 # [1.1.0-beta.1](https://github.com/PVermeer/dexie-encrypted-addon/compare/v1.0.9...v1.1.0-beta.1) (2020-01-22)
 
 
