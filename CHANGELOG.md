@@ -1,3 +1,10 @@
+# [2.0.0-beta.6](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2020-11-22)
+
+
+### Performance Improvements
+
+* **dependecies:** updated immutable-addon to not depend on full lodash ([ed9946a](https://github.com/PVermeer/dexie-encrypted-addon/commit/ed9946a86f1addcbc04035048c1651e423443284))
+
 # [2.0.0-beta.5](https://github.com/PVermeer/dexie-encrypted-addon/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2020-10-21)
 
 

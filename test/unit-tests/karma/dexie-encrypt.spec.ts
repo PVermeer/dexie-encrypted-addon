@@ -29,7 +29,7 @@ describe('Encrypted databases', () => {
 
                 overrideMethods.forEach(method => {
                     expect(db.Table.prototype[method].toString())
-                        .toEqual(jasmine.stringMatching('cloneDeep'));
+                        .toEqual(jasmine.stringMatching('clonedeep'));
                 });
             });
             describe('Hooks', () => {
