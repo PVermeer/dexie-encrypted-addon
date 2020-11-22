@@ -21,10 +21,29 @@ Dexie Encrypted Addon depends on Dexie.js v3.
 ```
 npm install dexie
 ```
-At the time of writing Dexie v3 is in the RC stage. To install this version you have to use the @next npm version. Current version of Dexie.js: [![NPM Version](https://img.shields.io/npm/v/dexie/latest.svg)](https://www.npmjs.com/package/dexie)
+
+Angular > 10
+----------------
+Angular now checks for CommonJS or AMD dependencies optimazations. This will give to following warning:
 ```
-npm install dexie@next
+WARNING in /<your path>/node_modules/@pvermeer/dexie-encrypted-addon/dist/esm-es5/encryption.class.js depends on 'tweetnacl'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
 ```
+As mentioned in the provided link add:
+```
+"build": {
+  "builder": "@angular-devkit/build-angular:browser",
+  "options": {
+     "allowedCommonJsDependencies": [
+        "tweetnacl"
+     ]
+     ...
+   }
+   ...
+}
+```
+to your angular.json file.
+The [tweetnacl package](https://www.npmjs.com/package/tweetnacl) handles te encryption and is not bundled in the main npm package (it is bundled in the min version) so it will be updated on patches.
 
 Documentation
 ----------------
